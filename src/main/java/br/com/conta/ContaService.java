@@ -4,8 +4,12 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.com.conta.exception.ContaJaExisteException;
+import br.com.conta.exception.ContaNaoEncontradaException;
 
 @Service
 public class ContaService {
@@ -13,15 +17,24 @@ public class ContaService {
 	@Autowired
 	private ContaRepository contaRepository;
 
-	public Conta cadastrarConta(@Valid Conta conta) {
-		return contaRepository.save(conta);
+	@Autowired
+	ModelMapper mapper;
+
+	public Conta cadastrarConta(@Valid ContaDTO contaDTO) throws ContaJaExisteException {
+		if (contaRepository.existsById(contaDTO.getId())) {
+			throw new ContaJaExisteException(contaDTO.getId());
+		} else {
+			Conta conta = mapper.map(contaDTO, Conta.class);
+			return contaRepository.save(conta);
+		}
 	}
 
-	public void editarConta(Long id, @Valid Conta conta) {
+	public void editarConta(Long id, @Valid ContaDTO contaDTO) throws ContaNaoEncontradaException {
 		if (contaRepository.existsById(id)) {
+			Conta conta = mapper.map(contaDTO, Conta.class);
 			contaRepository.save(conta);
 		} else {
-
+			throw new ContaNaoEncontradaException(id);
 		}
 	}
 
@@ -32,22 +45,26 @@ public class ContaService {
 	public List<Conta> listarContas() {
 		return contaRepository.findAll();
 	}
+
 	public Double listarSaldoTotal(Long idConta) {
 		Conta conta = this.dadosConta(idConta);
 		return conta.getSaldo();
 	}
+
 	public Conta dadosConta(Long idConta) {
 		return contaRepository.findById(idConta).get();
 	}
 
 	public void transferirSaldoEntreContas(Long contaId, Long contaDestinoId, Double valorTransferencia) {
+//TODO  Melhorar a implementacao do metodo
 		Conta conta = contaRepository.findById(contaId).get();
 		Conta contaDestino = contaRepository.findById(contaDestinoId).get();
 		this.sacarSaldo(conta.getId(), valorTransferencia);
-		this.depositarSaldo(contaDestinoId, valorTransferencia);
+		this.depositarSaldo(contaDestino.getId(), valorTransferencia);
 	}
 
 	public Double depositarSaldo(Long idConta, Double saldo) {
+//TODO  Melhorar a implementacao do metodo
 		Conta conta = contaRepository.findById(idConta).get();
 		conta.setSaldo(conta.getSaldo() + saldo);
 		contaRepository.save(conta);
@@ -55,6 +72,7 @@ public class ContaService {
 	}
 
 	public Double sacarSaldo(Long idConta, Double saldo) {
+//TODO  Melhorar a implementacao do metodo
 		Conta conta = contaRepository.findById(idConta).get();
 		conta.setSaldo(conta.getSaldo() - saldo);
 		contaRepository.save(conta);

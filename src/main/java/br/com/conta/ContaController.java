@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.conta.exception.ContaJaExisteException;
+import br.com.conta.exception.ContaNaoEncontradaException;
+
 @RestController
 @RequestMapping("conta")
 public class ContaController {
@@ -30,13 +33,13 @@ public class ContaController {
 	
 	
 	@PostMapping
-	public Conta cadastrarConta(@RequestBody Conta conta) {
-		return contaService.cadastrarConta(conta);
+	public Conta cadastrarConta(@RequestBody ContaDTO contaDTO) throws ContaJaExisteException {
+		return contaService.cadastrarConta(contaDTO);
 	}
 	
 	@PutMapping("{contaId}")
-	public void editarConta(@PathVariable Long contaId, @RequestBody Conta conta) {
-		contaService.editarConta(contaId, conta);
+	public void editarConta(@PathVariable Long contaId, @RequestBody ContaDTO contaDTO) throws ContaNaoEncontradaException {
+		contaService.editarConta(contaId, contaDTO);
 	}
 	
 	@DeleteMapping("{contaId}")
