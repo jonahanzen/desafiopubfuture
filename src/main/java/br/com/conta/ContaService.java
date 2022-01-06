@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.conta.exception.ContaJaExisteException;
 import br.com.conta.exception.ContaNaoEncontradaException;
+import br.com.conta.exception.DadosContaIncorretosException;
 
 @Service
 public class ContaService {
@@ -29,10 +30,14 @@ public class ContaService {
 		}
 	}
 
-	public void editarConta(Long id, @Valid ContaDTO contaDTO) throws ContaNaoEncontradaException {
+	public void editarConta(Long id, @Valid ContaDTO contaDTO) throws ContaNaoEncontradaException, DadosContaIncorretosException {
 		if (contaRepository.existsById(id)) {
+			try {
 			Conta conta = mapper.map(contaDTO, Conta.class);
 			contaRepository.save(conta);
+			} catch (Exception e) {
+				throw new DadosContaIncorretosException(contaDTO.getId());
+			}
 		} else {
 			throw new ContaNaoEncontradaException(id);
 		}
