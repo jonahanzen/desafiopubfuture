@@ -11,4 +11,5 @@ public class ContaDTO {
 	private TipoConta tipoConta;
 	private String instituicaoFinanceira;
 	
+
 }

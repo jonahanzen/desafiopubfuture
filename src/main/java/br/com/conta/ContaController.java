@@ -32,7 +32,7 @@ public class ContaController {
 	}
 
 	@PostMapping
-	public Conta cadastrarConta(@RequestBody ContaDTO contaDTO) throws ApiException {
+	public Conta cadastrarConta(@RequestBody ContaDTO contaDTO) throws Exception {
 		return contaService.cadastrarConta(contaDTO);
 	}
 
@@ -41,15 +41,15 @@ public class ContaController {
 		contaService.editarConta(contaId, contaDTO);
 	}
 
+	@PutMapping("{contaOrigem}/transferir/{contaDestino}/valor/{valorTransferencia}")
+	public void transferirSaldoEntreContas(@PathVariable Long contaOrigem, @PathVariable Long contaDestino,
+			@PathVariable Double valorTransferencia) throws ApiException {
+		contaService.transferirSaldoEntreContas(contaOrigem, contaDestino, valorTransferencia);
+	}
+
 	@DeleteMapping("{contaId}")
 	public void removerConta(@PathVariable Long contaId) throws ApiException {
 		contaService.removerConta(contaId);
-	}
-
-	@PutMapping("{conta}/{contaDestino}/{valorTransferencia}")
-	public void transferirSaldoEntreContas(@PathVariable Long conta, @PathVariable Long contaDestino,
-			@PathVariable Double valorTransferencia) throws ApiException {
-		contaService.transferirSaldoEntreContas(conta, contaDestino, valorTransferencia);
 	}
 
 }
