@@ -12,49 +12,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.conta.exception.ContaJaExisteException;
-import br.com.conta.exception.ContaNaoEncontradaException;
-import br.com.conta.exception.DadosContaIncorretosException;
 import br.com.exception.ApiException;
 
 @RestController
 @RequestMapping("conta")
 public class ContaController {
-	
+
 	@Autowired
 	private ContaService contaService;
-	
+
 	@GetMapping
 	public List<Conta> listarContas() {
 		return contaService.listarContas();
 	}
+
 	@GetMapping("{contaId}")
-	public Conta dadosContaporId(@PathVariable Long contaId) {
+	public Conta dadosContaporId(@PathVariable Long contaId) throws ApiException {
 		return contaService.dadosConta(contaId);
 	}
-	
-	
+
 	@PostMapping
 	public Conta cadastrarConta(@RequestBody ContaDTO contaDTO) throws ApiException {
 		return contaService.cadastrarConta(contaDTO);
 	}
-	
+
 	@PutMapping("{contaId}")
 	public void editarConta(@PathVariable Long contaId, @RequestBody ContaDTO contaDTO) throws ApiException {
 		contaService.editarConta(contaId, contaDTO);
 	}
-	
+
 	@DeleteMapping("{contaId}")
-	public void removerConta(@PathVariable Long contaId) {
+	public void removerConta(@PathVariable Long contaId) throws ApiException {
 		contaService.removerConta(contaId);
 	}
-	
+
 	@PutMapping("{conta}/{contaDestino}/{valorTransferencia}")
-	public void transferirSaldoEntreContas
-	(@PathVariable Long conta, @PathVariable Long contaDestino, @PathVariable Double valorTransferencia) {
-	contaService.transferirSaldoEntreContas(conta, contaDestino, valorTransferencia);
+	public void transferirSaldoEntreContas(@PathVariable Long conta, @PathVariable Long contaDestino,
+			@PathVariable Double valorTransferencia) throws ApiException {
+		contaService.transferirSaldoEntreContas(conta, contaDestino, valorTransferencia);
 	}
-	
-	
 
 }
