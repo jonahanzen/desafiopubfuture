@@ -6,17 +6,18 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import br.com.receita.enums.TipoReceita;
+
 public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 
 	List<Receita> findByIdAndDataRecebimentoBetween(Long id, LocalDate dataInicio, LocalDate dataFim);
 
-	List<Receita> findByTipoReceita(Long tipoReceita);
-	
+	List<Receita> findByTipoReceita(TipoReceita tipoReceita);
+
 	@Query("SELECT SUM(r.valor) FROM Receita r")
 	Double findValorTotalReceitas();
-	
+
 	@Query("SELECT SUM(r.valor) FROM Receita r WHERE Conta_id = ?1")
 	Double findValorTotalReceitasPorContaId(Long contaId);
 
-	
 }

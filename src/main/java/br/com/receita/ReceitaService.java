@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.conta.Conta;
 import br.com.conta.ContaRepository;
+import br.com.conta.exception.ContaNaoEncontradaException;
+import br.com.exception.ApiException;
+import br.com.receita.enums.TipoReceita;
 
 @Service
 public class ReceitaService {
@@ -24,32 +27,30 @@ public class ReceitaService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public Receita cadastrarReceita(@Valid ReceitaDTO receitaDTO) {
+	public Receita cadastrarReceita(@Valid ReceitaDTO receitaDTO) throws ApiException {
 	Receita receita = modelMapper.map(receitaDTO, Receita.class);
-	//TODO melhorar implementacao do metodo
-	Conta conta = contaRepository.findById(receitaDTO.getContaId()).get();
+	Conta conta = contaRepository.findById(receitaDTO.getContaId()).orElseThrow( () -> new ContaNaoEncontradaException(receitaDTO.getId()));
 	receita.setConta(conta);
 		return receitaRepository.save(receita);
 	}
 	
-	public Receita dadosReceita(Long id) {
-		//TODO Melhorar implementacao do metodo
-		return receitaRepository.findById(id).get();
+	public Receita dadosReceita(Long id) throws ApiException {
+		return receitaRepository.findById(id).orElseThrow( () -> new ContaNaoEncontradaException(id));
 	}
 	
-	public List<Receita> dadosReceitaPorTipoReceita(Long tipoReceita) {
+	public List<Receita> dadosReceitaPorTipoReceita(TipoReceita tipoReceita) {
 		return receitaRepository.findByTipoReceita(tipoReceita);
 	}
 	
-	public void editarReceita(Long id, @Valid Receita receita) {
+	public void editarReceita(Long id, @Valid Receita receita) throws ApiException {
 		if (receitaRepository.existsById(id)) {
 			receitaRepository.save(receita);
 		} else {
-			
+			throw new ContaNaoEncontradaException(id);
 		}
 	}
 	public void removerReceita(Long id) {
-		receitaRepository.deleteById(id);;
+		receitaRepository.deleteById(id);
 	}
 	public List<Receita> listarReceitas() {
 		return receitaRepository.findAll();
@@ -62,7 +63,7 @@ public class ReceitaService {
 	public Double valorTotalReceitas() {
 		return receitaRepository.findValorTotalReceitas();
 	}
-	public Double valorTotalReceitaPorUsuarioId(Long contaId) {
+	public Double valorTotalReceitaPorContaId(Long contaId) {
 		return receitaRepository.findValorTotalReceitasPorContaId(contaId);
 	}
 	
