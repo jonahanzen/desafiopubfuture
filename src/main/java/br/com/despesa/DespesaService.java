@@ -60,7 +60,7 @@ public class DespesaService {
 	}
 
 	public List<Despesa> listarDespesasPorPeriodo(Long id, LocalDate dataInicio, LocalDate dataFim) {
-		return despesaRepository.findByIdAndDataRecebimentoBetween(id, dataInicio, dataFim);
+		return despesaRepository.findByIdAndDataPagamentoBetween(id, dataInicio, dataFim);
 	}
 
 	public Double valorTotalDespesas() {

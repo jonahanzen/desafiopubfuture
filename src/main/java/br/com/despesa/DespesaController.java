@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.despesa.enums.TipoDespesa;
 import br.com.exception.ApiException;
-import br.com.receita.Receita;
-import br.com.receita.ReceitaDTO;
-import br.com.receita.ReceitaService;
-import br.com.receita.enums.TipoReceita;
 
 @RestController
 @RequestMapping("despesa")
@@ -51,27 +48,27 @@ public class DespesaController {
 
 	@GetMapping("{contaId}/total")
 	public Double valorTotalDespesasPorContaId(@PathVariable Long contaId) {
-		return despesaService.valorTotalReceitaPorContaId(contaId);
+		return despesaService.valorTotalDespesaPorContaId(contaId);
 	}
 
 	@GetMapping("tipo/{tipoReceita}")
-	public List<Receita> receitasPorTipoReceita(@PathVariable TipoReceita tipoReceita) {
-		return receitaService.dadosReceitaPorTipoReceita(tipoReceita);
+	public List<Despesa> despesaPorTipoDespesa(@PathVariable TipoDespesa tipoDespesa) {
+		return despesaService.dadosDespesaPorTipoDespesa(tipoDespesa);
 	}
 
 	@PostMapping
-	public Receita cadastrarReceita(@RequestBody ReceitaDTO receitaDTO) throws ApiException {
-		return receitaService.cadastrarReceita(receitaDTO);
+	public Despesa cadastrarDespesa(@RequestBody DespesaDTO despesaDTO) throws ApiException {
+		return despesaService.cadastrarDespesa(despesaDTO);
 	}
 
-	@PutMapping("{receitaId}")
-	public void editarReceita(@PathVariable Long receitaId, @RequestBody Receita receita) throws ApiException {
-		receitaService.editarReceita(receitaId, receita);
+	@PutMapping("{despesaId}")
+	public void editarDespesa(@PathVariable Long despesaId, @RequestBody Despesa despesa) throws ApiException {
+		despesaService.editarDespesa(despesaId, despesa);
 	}
 
-	@DeleteMapping("{receitaId}")
-	public void removerReceita(@PathVariable Long receitaId) {
-		receitaService.removerReceita(receitaId);
+	@DeleteMapping("{despesaId}")
+	public void removerDespesa(@PathVariable Long despesaId) {
+		despesaService.removerDespesa(despesaId);
 	}
 
 }

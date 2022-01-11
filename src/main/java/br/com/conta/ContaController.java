@@ -27,8 +27,13 @@ public class ContaController {
 	}
 
 	@GetMapping("{contaId}")
-	public Conta dadosContaporId(@PathVariable Long contaId) throws ApiException {
+	public Conta dadosContaPorId(@PathVariable Long contaId) throws ApiException {
 		return contaService.dadosConta(contaId);
+	}
+	
+	@GetMapping("{contaId}/total")
+	public Double saldoTotalContaPorId(@PathVariable Long contaId) throws ApiException {
+		return contaService.listarSaldoTotal(contaId);
 	}
 
 	@PostMapping

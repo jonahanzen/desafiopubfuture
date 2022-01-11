@@ -10,13 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.conta.exception.ContaNaoEncontradaException;
+import br.com.despesa.DespesaRepository;
 import br.com.exception.ApiException;
+import br.com.receita.ReceitaRepository;
 
 @Service
 public class ContaService {
 
 	@Autowired
 	private ContaRepository contaRepository;
+
+	@Autowired
+	private DespesaRepository despesaRepository;
+
+	@Autowired
+	private ReceitaRepository receitaRepository;
 
 	@Autowired
 	ModelMapper mapper;
@@ -51,8 +59,10 @@ public class ContaService {
 
 	public Double listarSaldoTotal(Long idConta) throws ApiException {
 		if (contaRepository.existsById(idConta)) {
-			Conta conta = this.dadosConta(idConta);
-			return conta.getSaldo();
+			Double contas = (receitaRepository.findValorTotalReceitasPorContaId(idConta)
+					- despesaRepository.findValorTotalDespesasPorContaId(idConta));
+			 Conta conta = this.dadosConta(idConta);
+			return (conta.getSaldo() - contas);
 		} else {
 			throw new ContaNaoEncontradaException(idConta);
 		}
