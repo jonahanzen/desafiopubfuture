@@ -36,10 +36,17 @@ public class ReceitaController {
 	}
 
 	@GetMapping("{contaId}/{dataInicio}/{dataFim}")
-	public List<Receita> listarReceitasPorPeriodo(@PathVariable Long contaId,
+	public List<Receita> listarReceitasContaPorPeriodo(@PathVariable Long contaId,
 			@PathVariable("dataInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataInicio,
 			@PathVariable("dataFim") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataFim) {
-		return receitaService.listarReceitasPorPeriodo(contaId, dataInicio, dataFim);
+		return receitaService.listarReceitasContaPorPeriodo(contaId, dataInicio, dataFim);
+	}
+	
+	@GetMapping("{dataInicio}/{dataFim}")
+	public List<Receita> listarReceitasPorPeriodo(
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataInicio,
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataFim) {
+		return receitaService.listarReceitasPorPeriodo(dataInicio, dataFim);
 	}
 
 	@GetMapping("total")
@@ -63,8 +70,8 @@ public class ReceitaController {
 	}
 
 	@PutMapping("{receitaId}")
-	public void editarReceita(@PathVariable Long receitaId, @RequestBody Receita receita) throws ApiException {
-		receitaService.editarReceita(receitaId, receita);
+	public void editarReceita(@PathVariable Long receitaId, @RequestBody ReceitaDTO receitaDTO) throws ApiException {
+		receitaService.editarReceita(receitaId, receitaDTO);
 	}
 
 	@DeleteMapping("{receitaId}")

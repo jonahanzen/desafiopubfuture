@@ -71,13 +71,27 @@ public class ReceitaService {
 	 * @param receita com os novos valores
 	 * @throws ApiException caso a receita nao seja encontrada
 	 */
-	public void editarReceita(Long id, @Valid Receita receita) throws ApiException {
+	public void editarReceita(Long id, @Valid ReceitaDTO receitaDTO) throws ApiException {
 		if (receitaRepository.existsById(id)) {
+			Receita receita = modelMapper.map(receitaDTO, Receita.class);
+			receita.setId(id);
 			receitaRepository.save(receita);
 		} else {
 			throw new ContaNaoEncontradaException(id);
 		}
 	}
+	
+	/**
+	 * Metodo responsavel por listar as receitas entre um periodo
+	 * 
+	 * @param dataInicio do periodo a ser consultado 
+	 * @param dataFim do periodo a ser consultado
+	 * @return List de receitas do periodo
+	 */
+	public List<Receita> listarReceitasPorPeriodo(LocalDate dataInicio, LocalDate dataFim) {
+		return receitaRepository.findByDataRecebimentoBetween(dataInicio, dataFim);
+	}
+	
 	
 	/**
 	 * Metodo responsavel por remover uma receita
@@ -105,7 +119,7 @@ public class ReceitaService {
 	 * @param dataFim do periodo a ser consultado
 	 * @return List de receitas do periodo
 	 */
-	public List<Receita> listarReceitasPorPeriodo(Long contaId, LocalDate dataInicio, LocalDate dataFim) {
+	public List<Receita> listarReceitasContaPorPeriodo(Long contaId, LocalDate dataInicio, LocalDate dataFim) {
 		return receitaRepository.findByContaIdAndDataRecebimentoBetween(contaId, dataInicio, dataFim);
 	}
 	

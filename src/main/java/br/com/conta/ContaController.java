@@ -43,7 +43,7 @@ public class ContaController {
 	}
 
 	@PostMapping
-	public Conta cadastrarConta(@RequestBody ContaDTO contaDTO) throws Exception {
+	public Conta cadastrarConta(@RequestBody ContaDTO contaDTO) throws ApiException {
 		return contaService.cadastrarConta(contaDTO);
 	}
 

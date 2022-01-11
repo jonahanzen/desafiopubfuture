@@ -37,11 +37,19 @@ public class DespesaController {
 	}
 
 	@GetMapping("{contaId}/{dataInicio}/{dataFim}")
-	public List<Despesa> listarDespesasPorPeriodo(@PathVariable Long contaId,
+	public List<Despesa> listarDespesasContaPorPeriodo(@PathVariable Long contaId,
 			@PathVariable("dataInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataInicio,
 			@PathVariable("dataFim") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataFim) {
-		return despesaService.listarDespesasPorPeriodo(contaId, dataInicio, dataFim);
+		return despesaService.listarDespesasContaPorPeriodo(contaId, dataInicio, dataFim);
 	}
+	
+	@GetMapping("{dataInicio}/{dataFim}")
+	public List<Despesa> listarDespesasPorPeriodo(
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataInicio,
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataFim ) {
+		return despesaService.listarDespesaPorPeriodo(dataInicio, dataFim);
+	}
+	
 
 	@GetMapping("total")
 	public Optional<Double> valorTotalDespesas() {
@@ -64,8 +72,8 @@ public class DespesaController {
 	}
 
 	@PutMapping("{despesaId}")
-	public void editarDespesa(@PathVariable Long despesaId, @RequestBody Despesa despesa) throws ApiException {
-		despesaService.editarDespesa(despesaId, despesa);
+	public void editarDespesa(@PathVariable Long despesaId, @RequestBody DespesaDTO despesaDTO) throws ApiException {
+		despesaService.editarDespesa(despesaId, despesaDTO);
 	}
 
 	@DeleteMapping("{despesaId}")

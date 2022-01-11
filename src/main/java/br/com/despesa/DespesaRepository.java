@@ -20,10 +20,9 @@ public interface DespesaRepository extends JpaRepository<Despesa, Long> {
 	@Query("SELECT SUM(d.valor) FROM Despesa d")
 	Optional<Double> findValorTotalDespesas();
 
-	@Query("SELECT SUM(d.valor) FROM Despesa d WHERE Conta_id = ?1")
+	@Query("SELECT SUM(d.valor) FROM Despesa d WHERE	 Conta_id = ?1")
 	Optional<Double> findValorTotalDespesasPorContaId(Long contaId);
-	
-	//TODO criar filtro de periodo sem conta id
-	
+
+	List<Despesa> findByDataPagamentoBetween(LocalDate dataInicio, LocalDate dataFim);
 
 }

@@ -65,9 +65,22 @@ public class DespesaService {
 	public List<Despesa> dadosDespesaPorTipoDespesa(TipoDespesa tipoDespesa) {
 		return despesaRepository.findByTipoDespesa(tipoDespesa);
 	}
+	
+	/**
+	 * Metodo responsavel por listar as despesas entre um periodo
+	 * 
+	 * @param dataInicio do periodo a ser consultado
+	 * @param dataFim do periodo a ser consultado
+	 * @return List de despesas do periodo
+	 */
+	public List<Despesa> listarDespesaPorPeriodo(LocalDate dataInicio, LocalDate dataFim) {
+		return despesaRepository.findByDataPagamentoBetween(dataInicio, dataFim);
+	}
 
-	public void editarDespesa(Long id, @Valid Despesa despesa) throws ApiException {
+	public void editarDespesa(Long id, @Valid DespesaDTO despesaDTO) throws ApiException {
 		if (despesaRepository.existsById(id)) {
+			Despesa despesa = modelMapper.map(despesaDTO, Despesa.class);
+			despesa.setId(id);
 			despesaRepository.save(despesa);
 		} else {
 			throw new DespesaNaoEncontradaException(id);
@@ -100,7 +113,7 @@ public class DespesaService {
 	 * @param dataFim da consulta das despesas
 	 * @return List com as despesas do periodo
 	 */
-	public List<Despesa> listarDespesasPorPeriodo(Long contaId, LocalDate dataInicio, LocalDate dataFim) {
+	public List<Despesa> listarDespesasContaPorPeriodo(Long contaId, LocalDate dataInicio, LocalDate dataFim) {
 		return despesaRepository.findByContaIdAndDataPagamentoBetween(contaId, dataInicio, dataFim);
 	}
 

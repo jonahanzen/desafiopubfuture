@@ -37,18 +37,19 @@ public class ContaService {
 	 * @throws ContaJaExisteException caso ja exista a conta por ID
 	 */
 	public Conta cadastrarConta(@Valid ContaDTO contaDTO) throws ApiException {
-		if (!contaRepository.existsById(contaDTO.getId())) {
-			Conta conta = mapper.map(contaDTO, Conta.class);
-			return contaRepository.save(conta);
-		} else {
-			throw new ContaJaExisteException(contaDTO.getId());
+		Conta conta = mapper.map(contaDTO, Conta.class);
+		if (contaDTO.getId() != null) {
+			if (contaRepository.existsById(contaDTO.getId())) {
+				throw new ContaJaExisteException(contaDTO.getId());
+			}
 		}
+		return contaRepository.save(conta);
 	}
 
 	/**
 	 * Metodo responsavel por editar a conta
 	 * 
-	 * @param id da conta a ser editada
+	 * @param id       da conta a ser editada
 	 * @param contaDTO com os novos valores
 	 * @throws ApiException caso a conta com o id nao exista
 	 */
@@ -83,9 +84,9 @@ public class ContaService {
 	}
 
 	/**
-	 * Metodo responsavel por listar o saldo total pelo Id da Conta
-	 * O metodo ira somar saldo e receita, subtraindo entao as despesas
-	 * (saldo + receita) - despesa
+	 * Metodo responsavel por listar o saldo total pelo Id da Conta O metodo ira
+	 * somar saldo e receita, subtraindo entao as despesas (saldo + receita) -
+	 * despesa
 	 * 
 	 * @param idConta a ser efetuado calculo do saldo total
 	 * @return Double saldo total da conta
@@ -105,9 +106,9 @@ public class ContaService {
 	}
 
 	/**
-	 * Metodo responsavel por listar o saldo total de todas as contas
-	 * O metodo ira somar o saldo e a receita das contas, e entao subtrair as despesas
-	 * (saldo + receitas) - despesa
+	 * Metodo responsavel por listar o saldo total de todas as contas O metodo ira
+	 * somar o saldo e a receita das contas, e entao subtrair as despesas (saldo +
+	 * receitas) - despesa
 	 * 
 	 * @return Double saldo total de todas as contas
 	 */
@@ -124,7 +125,7 @@ public class ContaService {
 	 * 
 	 * @param idConta dos dados a serem consultados
 	 * @return Conta com os dados consultados
-	 * @throws ApiException caso 
+	 * @throws ApiException caso
 	 */
 	public Conta dadosConta(Long idConta) throws ApiException {
 		return contaRepository.findById(idConta).orElseThrow(() -> new ContaNaoEncontradaException(idConta));
@@ -134,8 +135,8 @@ public class ContaService {
 	 * Metodo responsavel por transferir saldo entre duas contas
 	 * 
 	 * 
-	 * @param contaOrigemId da conta que esta transferindo
-	 * @param contaDestinoId da conta que recebe a transferencia
+	 * @param contaOrigemId      da conta que esta transferindo
+	 * @param contaDestinoId     da conta que recebe a transferencia
 	 * @param valorTransferencia do valor a ser transferido
 	 * @throws ApiException caso alguma das contas nao seja encontrada
 	 */
@@ -153,7 +154,7 @@ public class ContaService {
 	 * Metodo responsavel por depositar em uma conta
 	 * 
 	 * @param idConta para onde sera depositoado
-	 * @param saldo a ser depositado
+	 * @param saldo   a ser depositado
 	 * @return Double valor que foi depositado
 	 * @throws ApiException caso a conta nao seja encontrada
 	 */
@@ -168,7 +169,7 @@ public class ContaService {
 	 * Metodo responsavel por sacar de uma conta
 	 * 
 	 * @param idConta de onde sera sacado
-	 * @param saldo a ser sacado
+	 * @param saldo   a ser sacado
 	 * @return Double valor que foi sacado
 	 * @throws ApiException caso a conta nao seja encontrada
 	 */
