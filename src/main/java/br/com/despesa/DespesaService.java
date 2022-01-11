@@ -57,7 +57,7 @@ public class DespesaService {
 
 	/**
 	 * Metodo responsavel por consultar dados de todas as despesas pelo tipo de despesa
-	 * @see @L
+	 * @see {@link TipoDespesa}
 	 * 
 	 * @param tipoDespesa a ser consultado
 	 * @return List de despesas 
@@ -93,7 +93,7 @@ public class DespesaService {
 	}
 
 	/**
-	 * Metodo responsavel por consultar despesas entre um periodo e outro
+	 * Metodo responsavel por consultar despesas entre um periodo e outro de uma conta
 	 * 
 	 * @param contaId das despesas a serem consultadas
 	 * @param dataInicio da consulta das despesas

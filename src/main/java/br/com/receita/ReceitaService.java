@@ -57,13 +57,20 @@ public class ReceitaService {
 	 * Metodo responsavel por consultar as receitas por tipo de receita
 	 * @see {@link TipoReceita}
 	 * 
-	 * @param tipoReceita
-	 * @return
+	 * @param tipoReceita a ser consultado
+	 * @return List de receitas
 	 */
 	public List<Receita> dadosReceitaPorTipoReceita(TipoReceita tipoReceita) {
 		return receitaRepository.findByTipoReceita(tipoReceita);
 	}
 	
+	/**
+	 * Metodo responsavel por editar uma receita
+	 * 
+	 * @param id da receita a ser editada
+	 * @param receita com os novos valores
+	 * @throws ApiException caso a receita nao seja encontrada
+	 */
 	public void editarReceita(Long id, @Valid Receita receita) throws ApiException {
 		if (receitaRepository.existsById(id)) {
 			receitaRepository.save(receita);
@@ -71,22 +78,53 @@ public class ReceitaService {
 			throw new ContaNaoEncontradaException(id);
 		}
 	}
+	
+	/**
+	 * Metodo responsavel por remover uma receita
+	 * 
+	 * @param id da receita a ser removida
+	 */
 	public void removerReceita(Long id) {
 		receitaRepository.deleteById(id);
 	}
+	
+	/**
+	 * Metodo responsavel por listar todas as receitas
+	 * 
+	 * @return List de receitas
+	 */
 	public List<Receita> listarReceitas() {
 		return receitaRepository.findAll();
 	}
 	
+	/**
+	 * Metodo responsavel por consultar receitas entre um periodo e outro de uma conta
+	 * 
+	 * @param contaId das receitas a serem consultadas
+	 * @param dataInicio do periodo a ser consultado
+	 * @param dataFim do periodo a ser consultado
+	 * @return List de receitas do periodo
+	 */
 	public List<Receita> listarReceitasPorPeriodo(Long contaId, LocalDate dataInicio, LocalDate dataFim) {
 		return receitaRepository.findByContaIdAndDataRecebimentoBetween(contaId, dataInicio, dataFim);
 	}
 	
+	/**
+	 * Metodo responsavel por consultar o valor total das receitas
+	 * 
+	 * @return null caso nao haja receitas; Double valor total das receitas
+	 */
 	public Optional<Double> valorTotalReceitas() {
 		return receitaRepository.findValorTotalReceitas();
 	}
+	
+	/**
+	 * Metodo responsavel por consultar o valor total das receitas de uma conta
+	 * 
+	 * @param contaId a ser consultado
+	 * @return null caso nao haja receitas; Double valor total das receitas da conta
+	 */
 	public Optional<Double> valorTotalReceitaPorContaId(Long contaId) {
-		//TODO melhorar implementacao deste metodo
 		return receitaRepository.findValorTotalReceitasPorContaId(contaId);
 	}
 	
