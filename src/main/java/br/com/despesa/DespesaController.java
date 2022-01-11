@@ -2,6 +2,7 @@ package br.com.despesa;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,6 +24,7 @@ public class DespesaController {
 
 	@Autowired
 	private DespesaService despesaService;
+	
 
 	@GetMapping
 	public List<Despesa> listarDespesas() {
@@ -42,16 +44,16 @@ public class DespesaController {
 	}
 
 	@GetMapping("total")
-	public Double valorTotalDespesas() {
+	public Optional<Double> valorTotalDespesas() {
 		return despesaService.valorTotalDespesas();
 	}
 
 	@GetMapping("{contaId}/total")
-	public Double valorTotalDespesasPorContaId(@PathVariable Long contaId) {
+	public Optional<Double> valorTotalDespesasPorContaId(@PathVariable Long contaId) {
 		return despesaService.valorTotalDespesaPorContaId(contaId);
 	}
 
-	@GetMapping("tipo/{tipoReceita}")
+	@GetMapping("tipo/{tipoDespesa}")
 	public List<Despesa> despesaPorTipoDespesa(@PathVariable TipoDespesa tipoDespesa) {
 		return despesaService.dadosDespesaPorTipoDespesa(tipoDespesa);
 	}

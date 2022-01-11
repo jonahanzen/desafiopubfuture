@@ -2,6 +2,7 @@ package br.com.receita;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -42,12 +43,12 @@ public class ReceitaController {
 	}
 
 	@GetMapping("total")
-	public Double valorTotalReceitas() {
+	public Optional<Double> valorTotalReceitas() {
 		return receitaService.valorTotalReceitas();
 	}
 
 	@GetMapping("{contaId}/total")
-	public Double valorTotalReceitasPorContaId(@PathVariable Long contaId) {
+	public Optional<Double> valorTotalReceitasPorContaId(@PathVariable Long contaId) {
 		return receitaService.valorTotalReceitaPorContaId(contaId);
 	}
 

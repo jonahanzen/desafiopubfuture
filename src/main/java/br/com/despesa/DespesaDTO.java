@@ -12,7 +12,7 @@ public class DespesaDTO {
 	private Long contaId;
 	private Double valor;
 	private LocalDate dataPagamento;
-	private LocalDate dataRecebimentoEsperado;
+	private LocalDate dataPagamentoEsperado;
 	private String descricao;
 	private TipoReceita tipoReceita;
 

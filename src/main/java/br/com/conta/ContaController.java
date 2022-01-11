@@ -25,6 +25,12 @@ public class ContaController {
 	public List<Conta> listarContas() {
 		return contaService.listarContas();
 	}
+	
+	@GetMapping("total")
+	public Double listarSaldoTotal() {
+		return contaService.listarSaldoTotal();
+	}
+	
 
 	@GetMapping("{contaId}")
 	public Conta dadosContaPorId(@PathVariable Long contaId) throws ApiException {
@@ -33,7 +39,7 @@ public class ContaController {
 	
 	@GetMapping("{contaId}/total")
 	public Double saldoTotalContaPorId(@PathVariable Long contaId) throws ApiException {
-		return contaService.listarSaldoTotal(contaId);
+		return contaService.listarSaldoTotalPorId(contaId);
 	}
 
 	@PostMapping

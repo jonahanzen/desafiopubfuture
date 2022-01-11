@@ -2,6 +2,7 @@ package br.com.despesa;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,16 +13,17 @@ import br.com.despesa.enums.TipoDespesa;
 @Repository
 public interface DespesaRepository extends JpaRepository<Despesa, Long> {
 
-	List<Despesa> findByIdAndDataPagamentoBetween(Long id, LocalDate dataInicio, LocalDate dataFim);
+	List<Despesa> findByContaIdAndDataPagamentoBetween(Long id, LocalDate dataInicio, LocalDate dataFim);
 
 	List<Despesa> findByTipoDespesa(TipoDespesa tipoDespesa);
 
 	@Query("SELECT SUM(d.valor) FROM Despesa d")
-	Double findValorTotalDespesas();
+	Optional<Double> findValorTotalDespesas();
 
 	@Query("SELECT SUM(d.valor) FROM Despesa d WHERE Conta_id = ?1")
-	Double findValorTotalDespesasPorContaId(Long contaId);
+	Optional<Double> findValorTotalDespesasPorContaId(Long contaId);
 	
+	//TODO criar filtro de periodo sem conta id
 	
 
 }

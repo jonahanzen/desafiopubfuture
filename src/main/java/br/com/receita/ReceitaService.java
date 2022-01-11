@@ -2,6 +2,7 @@ package br.com.receita;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -27,6 +28,13 @@ public class ReceitaService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	/**
+	 * Metodo responsavel por cadastrar uma receita
+	 * 
+	 * @param receitaDTO receita a ser cadastrada
+	 * @return Receita cadastrada
+	 * @throws ApiException caso o Id da conta da receita nao seja encontrado
+	 */
 	public Receita cadastrarReceita(@Valid ReceitaDTO receitaDTO) throws ApiException {
 	Receita receita = modelMapper.map(receitaDTO, Receita.class);
 	Conta conta = contaRepository.findById(receitaDTO.getContaId()).orElseThrow( () -> new ContaNaoEncontradaException(receitaDTO.getId()));
@@ -34,10 +42,24 @@ public class ReceitaService {
 		return receitaRepository.save(receita);
 	}
 	
+	/**
+	 * Metodo responsavel por consultar os dados de uma receita
+	 * 
+	 * @param id da receita a ser consultada
+	 * @return Receita da consulta
+	 * @throws ApiException caso a receita nao exista
+	 */
 	public Receita dadosReceita(Long id) throws ApiException {
 		return receitaRepository.findById(id).orElseThrow( () -> new ContaNaoEncontradaException(id));
 	}
 	
+	/**
+	 * Metodo responsavel por consultar as receitas por tipo de receita
+	 * @see {@link TipoReceita}
+	 * 
+	 * @param tipoReceita
+	 * @return
+	 */
 	public List<Receita> dadosReceitaPorTipoReceita(TipoReceita tipoReceita) {
 		return receitaRepository.findByTipoReceita(tipoReceita);
 	}
@@ -56,14 +78,15 @@ public class ReceitaService {
 		return receitaRepository.findAll();
 	}
 	
-	public List<Receita> listarReceitasPorPeriodo(Long id, LocalDate dataInicio, LocalDate dataFim) {
-		return receitaRepository.findByIdAndDataRecebimentoBetween(id, dataInicio, dataFim);
+	public List<Receita> listarReceitasPorPeriodo(Long contaId, LocalDate dataInicio, LocalDate dataFim) {
+		return receitaRepository.findByContaIdAndDataRecebimentoBetween(contaId, dataInicio, dataFim);
 	}
 	
-	public Double valorTotalReceitas() {
+	public Optional<Double> valorTotalReceitas() {
 		return receitaRepository.findValorTotalReceitas();
 	}
-	public Double valorTotalReceitaPorContaId(Long contaId) {
+	public Optional<Double> valorTotalReceitaPorContaId(Long contaId) {
+		//TODO melhorar implementacao deste metodo
 		return receitaRepository.findValorTotalReceitasPorContaId(contaId);
 	}
 	
