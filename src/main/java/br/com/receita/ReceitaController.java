@@ -20,6 +20,7 @@ import br.com.receita.dto.EditarReceitaDTO;
 import br.com.receita.dto.NovaReceitaDTO;
 import br.com.receita.enums.TipoReceita;
 import br.com.receita.exception.ReceitaNaoEncontradaException;
+import io.swagger.annotations.ApiModelProperty;
 
 @RestController
 @RequestMapping("receita")
@@ -66,7 +67,7 @@ public class ReceitaController {
 	public List<Receita> receitasPorTipoReceita(@PathVariable TipoReceita tipoReceita) {
 		return receitaService.dadosReceitaPorTipoReceita(tipoReceita);
 	}
-
+	
 	@PostMapping
 	public Receita cadastrarReceita(@RequestBody NovaReceitaDTO receitaDTO) throws ApiException {
 		return receitaService.cadastrarReceita(receitaDTO);

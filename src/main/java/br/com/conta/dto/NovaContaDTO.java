@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 /**
- * Classe criada para conter apenas os dados necessarios para a inclusao de uma
- * conta {@link Conta}
+ * Classe que contem apenas as propriedades necessarias para a inclusao de uma
+ * Conta
  *
  */
 public class NovaContaDTO {

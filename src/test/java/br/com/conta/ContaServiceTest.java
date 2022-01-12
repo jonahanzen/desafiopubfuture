@@ -64,7 +64,6 @@ class ContaServiceTest {
 	@Test
 	void deveEditarConta() throws ApiException {
 		EditarContaDTO conta = new EditarContaDTO();
-		conta.setId(2L);
 		conta.setInstituicaoFinanceira("BB");
 		conta.setSaldo(1500.50);
 		conta.setTipoConta(TipoConta.CARTEIRA);

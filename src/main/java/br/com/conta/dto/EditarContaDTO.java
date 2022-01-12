@@ -5,14 +5,12 @@ import lombok.Data;
 
 @Data
 /**
- * Classe criada para conter apenas os dados necessarios para alterar uma conta
- * {@link Conta}
+ * Classe que contem apenas as propriedades necessarias para alterar uma Conta
  * 
  *
  */
 public class EditarContaDTO {
 
-	private Long id;
 	private Double saldo;
 	private TipoConta tipoConta;
 	private String instituicaoFinanceira;
