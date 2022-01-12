@@ -51,9 +51,9 @@ public class ContaService {
 	 * 
 	 * @param id       da conta a ser editada
 	 * @param contaDTO com os novos valores
-	 * @throws ApiException caso a conta com o id nao exista
+	 * @throws ContaNaoEncontradaException caso a conta com o id nao exista
 	 */
-	public void editarConta(Long id, @Valid ContaDTO contaDTO) throws ApiException {
+	public void editarConta(Long id, @Valid ContaDTO contaDTO) throws ContaNaoEncontradaException {
 		contaRepository.findById(id).orElseThrow(() -> new ContaNaoEncontradaException(id));
 		Conta conta = mapper.map(contaDTO, Conta.class);
 		conta.setId(id);

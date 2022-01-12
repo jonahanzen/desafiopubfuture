@@ -1,8 +1,8 @@
 package br.com.conta;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -129,7 +129,7 @@ class ContaServiceTest {
 	void deveDepositarSaldo() throws ApiException {
 		Conta conta = contaService.dadosConta(4L);
 		Double deposito = contaService.depositarSaldo(4L, 2000.00);
-		assertFalse(conta.getSaldo() == deposito);
+		assertNotSame(conta.getSaldo(), deposito);
 	}
 
 	@Test

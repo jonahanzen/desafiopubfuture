@@ -15,6 +15,7 @@ import br.com.conta.ContaRepository;
 import br.com.conta.exception.ContaNaoEncontradaException;
 import br.com.exception.ApiException;
 import br.com.receita.enums.TipoReceita;
+import br.com.receita.exception.ReceitaNaoEncontradaException;
 
 @Service
 public class ReceitaService {
@@ -97,8 +98,12 @@ public class ReceitaService {
 	 * Metodo responsavel por remover uma receita
 	 * 
 	 * @param id da receita a ser removida
+	 * @throws ReceitaNaoEncontradaException  caso a receita nao exista
 	 */
-	public void removerReceita(Long id) {
+	public void removerReceita(Long id) throws ReceitaNaoEncontradaException {
+		if (!receitaRepository.existsById(id)) {
+			throw new ReceitaNaoEncontradaException(id);
+		}
 		receitaRepository.deleteById(id);
 	}
 	

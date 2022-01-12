@@ -31,7 +31,6 @@ public class ContaController {
 		return contaService.listarSaldoTotal();
 	}
 	
-
 	@GetMapping("{contaId}")
 	public Conta dadosContaPorId(@PathVariable Long contaId) throws ApiException {
 		return contaService.dadosConta(contaId);

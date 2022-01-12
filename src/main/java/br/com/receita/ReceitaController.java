@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.exception.ApiException;
 import br.com.receita.enums.TipoReceita;
+import br.com.receita.exception.ReceitaNaoEncontradaException;
 
 @RestController
 @RequestMapping("receita")
@@ -75,7 +76,7 @@ public class ReceitaController {
 	}
 
 	@DeleteMapping("{receitaId}")
-	public void removerReceita(@PathVariable Long receitaId) {
+	public void removerReceita(@PathVariable Long receitaId) throws ReceitaNaoEncontradaException {
 		receitaService.removerReceita(receitaId);
 	}
 
