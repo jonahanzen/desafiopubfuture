@@ -16,9 +16,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.com.conta.ContaDTO;
 import br.com.conta.ContaService;
+import br.com.conta.dto.EditarContaDTO;
+import br.com.conta.dto.NovaContaDTO;
 import br.com.conta.enums.TipoConta;
+import br.com.despesa.dto.EditarDespesaDTO;
+import br.com.despesa.dto.NovaDespesaDTO;
 import br.com.despesa.enums.TipoDespesa;
 import br.com.despesa.exception.DespesaNaoEncontradaException;
 import br.com.exception.ApiException;
@@ -36,23 +39,23 @@ class DespesaServiceTest {
 	@Autowired
 	ModelMapper modelMapper;
 
-	private static ContaDTO contaDTO;
-	private static DespesaDTO despesaDTO;
+	private static NovaContaDTO contaDTO;
+	private static NovaDespesaDTO despesaDTO;
 
 	@BeforeAll
 	// Cadastra 2 contas e 3 despesas
 	void despesasSetup() throws ApiException {
-		contaDTO = new ContaDTO();
+		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
 		contaDTO.setInstituicaoFinanceira("Picpay");
 		contaService.cadastrarConta(contaDTO);
-		contaDTO = new ContaDTO();
+		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
 		contaDTO.setInstituicaoFinanceira("Picpay");
 		contaService.cadastrarConta(contaDTO);
-		despesaDTO = new DespesaDTO();
+		despesaDTO = new NovaDespesaDTO();
 		despesaDTO.setContaId(1L);
 		despesaDTO.setDataPagamento(LocalDate.of(2020, 10, 20));
 		despesaDTO.setDataPagamentoEsperado(LocalDate.of(2020, 10, 20));
@@ -60,7 +63,7 @@ class DespesaServiceTest {
 		despesaDTO.setTipoDespesa(TipoDespesa.OUTROS);
 		despesaDTO.setValor(3500.50);
 		despesaService.cadastrarDespesa(despesaDTO);
-		despesaDTO = new DespesaDTO();
+		despesaDTO = new NovaDespesaDTO();
 		despesaDTO.setContaId(1L);
 		despesaDTO.setDataPagamento(LocalDate.of(2020, 10, 20));
 		despesaDTO.setDataPagamentoEsperado(LocalDate.of(2020, 10, 20));
@@ -68,7 +71,7 @@ class DespesaServiceTest {
 		despesaDTO.setTipoDespesa(TipoDespesa.OUTROS);
 		despesaDTO.setValor(3500.50);
 		despesaService.cadastrarDespesa(despesaDTO);
-		despesaDTO = new DespesaDTO();
+		despesaDTO = new NovaDespesaDTO();
 		despesaDTO.setContaId(2L);
 		despesaDTO.setDataPagamento(LocalDate.of(2020, 10, 20));
 		despesaDTO.setDataPagamentoEsperado(LocalDate.of(2020, 10, 20));
@@ -102,8 +105,7 @@ class DespesaServiceTest {
 
 	@Test
 	void deveEditarDespesa() throws ApiException {
-		DespesaDTO despesa = new DespesaDTO();
-		despesa.setContaId(2l);
+		EditarDespesaDTO despesa = new EditarDespesaDTO();
 		despesa.setDescricao("Edit Despesa");
 		despesa.setTipoDespesa(TipoDespesa.LAZER);
 		despesa.setId(2l);

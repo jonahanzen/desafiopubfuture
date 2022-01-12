@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import javax.validation.Valid;
+
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,8 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.com.conta.dto.EditarContaDTO;
+import br.com.conta.dto.NovaContaDTO;
 import br.com.conta.enums.TipoConta;
 import br.com.conta.exception.ContaNaoEncontradaException;
 import br.com.exception.ApiException;
@@ -25,31 +29,31 @@ class ContaServiceTest {
 	@Autowired
 	private ContaService contaService;
 
-	private static ContaDTO contaDTO;
+	private static @Valid NovaContaDTO contaDTO;
 
 	@BeforeAll
 	public void contasSetup() throws ApiException {
-		contaDTO = new ContaDTO();
+		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
 		contaDTO.setInstituicaoFinanceira("Picpay");
 		contaService.cadastrarConta(contaDTO);
-		contaDTO = new ContaDTO();
+		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
 		contaDTO.setInstituicaoFinanceira("Picpay");
 		contaService.cadastrarConta(contaDTO);
-		contaDTO = new ContaDTO();
+		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
 		contaDTO.setInstituicaoFinanceira("Picpay");
 		contaService.cadastrarConta(contaDTO);
-		contaDTO = new ContaDTO();
+		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
 		contaDTO.setInstituicaoFinanceira("Picpay");
 		contaService.cadastrarConta(contaDTO);
-		contaDTO = new ContaDTO();
+		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
 		contaDTO.setInstituicaoFinanceira("Picpay");
@@ -59,7 +63,7 @@ class ContaServiceTest {
 
 	@Test
 	void deveEditarConta() throws ApiException {
-		ContaDTO conta = new ContaDTO();
+		EditarContaDTO conta = new EditarContaDTO();
 		conta.setId(2L);
 		conta.setInstituicaoFinanceira("BB");
 		conta.setSaldo(1500.50);
@@ -103,8 +107,6 @@ class ContaServiceTest {
 
 	@Test
 	void deveListarSaldoTotalPorId() throws ApiException {
-		contaDTO.setId(10L);
-		contaService.cadastrarConta(contaDTO);
 		assertNotNull(contaService.listarSaldoTotalPorId(1L));
 	}
 

@@ -14,6 +14,8 @@ import br.com.conta.Conta;
 import br.com.conta.ContaRepository;
 import br.com.conta.exception.ContaNaoEncontradaException;
 import br.com.exception.ApiException;
+import br.com.receita.dto.EditarReceitaDTO;
+import br.com.receita.dto.NovaReceitaDTO;
 import br.com.receita.enums.TipoReceita;
 import br.com.receita.exception.ReceitaNaoEncontradaException;
 
@@ -36,7 +38,7 @@ public class ReceitaService {
 	 * @return Receita cadastrada
 	 * @throws ApiException caso o Id da conta da receita nao seja encontrado
 	 */
-	public Receita cadastrarReceita(@Valid ReceitaDTO receitaDTO) throws ApiException {
+	public Receita cadastrarReceita(@Valid NovaReceitaDTO receitaDTO) throws ApiException {
 	Receita receita = modelMapper.map(receitaDTO, Receita.class);
 	Conta conta = contaRepository.findById(receitaDTO.getContaId()).orElseThrow( () -> new ContaNaoEncontradaException(receitaDTO.getId()));
 	receita.setConta(conta);
@@ -72,7 +74,7 @@ public class ReceitaService {
 	 * @param receita com os novos valores
 	 * @throws ApiException caso a receita nao seja encontrada
 	 */
-	public void editarReceita(Long id, @Valid ReceitaDTO receitaDTO) throws ApiException {
+	public void editarReceita(Long id, @Valid EditarReceitaDTO receitaDTO) throws ApiException {
 		Receita receita = receitaRepository.findById(id).orElseThrow( () -> new ReceitaNaoEncontradaException(id)) ;
 		Conta conta = contaRepository.findById(receita.getConta().getId()).orElseThrow( () -> new ContaNaoEncontradaException(id) ) ;
 			Receita novaReceita = modelMapper.map(receitaDTO, Receita.class);

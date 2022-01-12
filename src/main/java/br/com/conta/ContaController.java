@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.conta.dto.EditarContaDTO;
+import br.com.conta.dto.NovaContaDTO;
 import br.com.exception.ApiException;
 
 @RestController
@@ -42,12 +44,12 @@ public class ContaController {
 	}
 
 	@PostMapping
-	public Conta cadastrarConta(@RequestBody ContaDTO contaDTO) throws ApiException {
+	public Conta cadastrarConta(@RequestBody NovaContaDTO contaDTO) {
 		return contaService.cadastrarConta(contaDTO);
 	}
 
 	@PutMapping("{contaId}")
-	public void editarConta(@PathVariable Long contaId, @RequestBody ContaDTO contaDTO) throws ApiException {
+	public void editarConta(@PathVariable Long contaId, @RequestBody EditarContaDTO contaDTO) throws ApiException {
 		contaService.editarConta(contaId, contaDTO);
 	}
 

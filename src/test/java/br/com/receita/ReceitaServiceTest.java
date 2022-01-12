@@ -15,10 +15,13 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.com.conta.ContaDTO;
 import br.com.conta.ContaService;
+import br.com.conta.dto.EditarContaDTO;
+import br.com.conta.dto.NovaContaDTO;
 import br.com.conta.enums.TipoConta;
 import br.com.exception.ApiException;
+import br.com.receita.dto.EditarReceitaDTO;
+import br.com.receita.dto.NovaReceitaDTO;
 import br.com.receita.enums.TipoReceita;
 import br.com.receita.exception.ReceitaNaoEncontradaException;
 
@@ -32,36 +35,37 @@ class ReceitaServiceTest {
 	@Autowired
 	private ContaService contaService;
 	
-	private static ContaDTO contaDTO;
-	private static ReceitaDTO receitaDTO;
+	private static NovaContaDTO contaDTO;
+	private static NovaReceitaDTO receitaDTO;
+	private static EditarReceitaDTO editarReceitaDTO;
 	
 	@BeforeAll
 	//Cadastra 2 contas e 3 receitas
 	public void receitaSetup() throws ApiException {
 		
-		contaDTO = new ContaDTO();
+		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
 		contaDTO.setInstituicaoFinanceira("Picpay");
 		contaService.cadastrarConta(contaDTO);
-		contaDTO = new ContaDTO();
+		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
 		contaDTO.setInstituicaoFinanceira("Picpay");
 		contaService.cadastrarConta(contaDTO);
-		receitaDTO = new ReceitaDTO();
+		receitaDTO = new NovaReceitaDTO();
 		receitaDTO.setContaId(1L);
 		receitaDTO.setDataRecebimento(LocalDate.of(2022, 01, 16));
 		receitaDTO.setDataRecebimentoEsperado(LocalDate.of(2022, 01, 16));
 		receitaDTO.setTipoReceita(TipoReceita.SALARIO);
 		receitaService.cadastrarReceita(receitaDTO);
-		receitaDTO = new ReceitaDTO();
+		receitaDTO = new NovaReceitaDTO();
 		receitaDTO.setContaId(1L);
 		receitaDTO.setDataRecebimento(LocalDate.of(2022, 01, 16));
 		receitaDTO.setDataRecebimentoEsperado(LocalDate.of(2022, 01, 16));
 		receitaDTO.setTipoReceita(TipoReceita.SALARIO);
 		receitaService.cadastrarReceita(receitaDTO);
-		receitaDTO = new ReceitaDTO();
+		receitaDTO = new NovaReceitaDTO();
 		receitaDTO.setContaId(2L);
 		receitaDTO.setDataRecebimento(LocalDate.of(2022, 01, 16));
 		receitaDTO.setDataRecebimentoEsperado(LocalDate.of(2022, 01, 16));
@@ -81,11 +85,11 @@ class ReceitaServiceTest {
 
 	@Test
 	void deveEditarReceita() throws ApiException {
-		receitaDTO = new ReceitaDTO();
-		receitaDTO.setId(2L);
-		receitaDTO.setDescricao("Receita Edit");
-		receitaDTO.setValor(1800.75);
-		receitaService.editarReceita(2L, receitaDTO);
+		editarReceitaDTO = new EditarReceitaDTO();
+		editarReceitaDTO.setId(2L);
+		editarReceitaDTO.setDescricao("Receita Edit");
+		editarReceitaDTO.setValor(1800.75);
+		receitaService.editarReceita(2L, editarReceitaDTO);
 		Receita receita = receitaService.dadosReceita(2L);
 		assertAll(
 				() -> assertEquals( "Receita Edit" , receita.getDescricao()),

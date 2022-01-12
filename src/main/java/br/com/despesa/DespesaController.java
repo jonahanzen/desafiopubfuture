@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.conta.dto.EditarContaDTO;
+import br.com.despesa.dto.EditarDespesaDTO;
+import br.com.despesa.dto.NovaDespesaDTO;
 import br.com.despesa.enums.TipoDespesa;
 import br.com.exception.ApiException;
 
@@ -67,12 +70,12 @@ public class DespesaController {
 	}
 
 	@PostMapping
-	public Despesa cadastrarDespesa(@RequestBody DespesaDTO despesaDTO) throws ApiException {
+	public Despesa cadastrarDespesa(@RequestBody NovaDespesaDTO despesaDTO) throws ApiException {
 		return despesaService.cadastrarDespesa(despesaDTO);
 	}
 
 	@PutMapping("{despesaId}")
-	public void editarDespesa(@PathVariable Long despesaId, @RequestBody DespesaDTO despesaDTO) throws ApiException {
+	public void editarDespesa(@PathVariable Long despesaId, @RequestBody EditarDespesaDTO despesaDTO) throws ApiException {
 		despesaService.editarDespesa(despesaId, despesaDTO);
 	}
 

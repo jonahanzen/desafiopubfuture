@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.conta.dto.EditarContaDTO;
+import br.com.conta.dto.NovaContaDTO;
 import br.com.conta.exception.ContaJaExisteException;
 import br.com.conta.exception.ContaNaoEncontradaException;
 import br.com.despesa.DespesaRepository;
@@ -36,13 +38,8 @@ public class ContaService {
 	 * @return conta cadastrada
 	 * @throws ContaJaExisteException caso ja exista a conta por ID
 	 */
-	public Conta cadastrarConta(@Valid ContaDTO contaDTO) throws ApiException {
+	public Conta cadastrarConta(@Valid NovaContaDTO contaDTO) {
 		Conta conta = mapper.map(contaDTO, Conta.class);
-		if (contaDTO.getId() != null) {
-			if (contaRepository.existsById(contaDTO.getId())) {
-				throw new ContaJaExisteException(contaDTO.getId());
-			}
-		}
 		return contaRepository.save(conta);
 	}
 
@@ -53,7 +50,7 @@ public class ContaService {
 	 * @param contaDTO com os novos valores
 	 * @throws ContaNaoEncontradaException caso a conta com o id nao exista
 	 */
-	public void editarConta(Long id, @Valid ContaDTO contaDTO) throws ContaNaoEncontradaException {
+	public void editarConta(Long id, @Valid EditarContaDTO contaDTO) throws ContaNaoEncontradaException {
 		contaRepository.findById(id).orElseThrow(() -> new ContaNaoEncontradaException(id));
 		Conta conta = mapper.map(contaDTO, Conta.class);
 		conta.setId(id);

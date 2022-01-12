@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import br.com.conta.Conta;
 import br.com.conta.ContaRepository;
 import br.com.conta.exception.ContaNaoEncontradaException;
+import br.com.despesa.dto.EditarDespesaDTO;
+import br.com.despesa.dto.NovaDespesaDTO;
 import br.com.despesa.enums.TipoDespesa;
 import br.com.despesa.exception.DespesaNaoEncontradaException;
 import br.com.exception.ApiException;
@@ -36,7 +38,7 @@ public class DespesaService {
 	 * @return Despesa cadastrada
 	 * @throws ApiException caso o id da Conta da despesa nao seja encontrado
 	 */
-	public Despesa cadastrarDespesa(@Valid DespesaDTO despesaDTO) throws ApiException {
+	public Despesa cadastrarDespesa(@Valid NovaDespesaDTO despesaDTO) throws ApiException {
 		Despesa despesa = modelMapper.map(despesaDTO, Despesa.class);
 		Conta conta = contaRepository.findById(despesaDTO.getContaId())
 				.orElseThrow(() -> new ContaNaoEncontradaException(despesaDTO.getId()));
@@ -79,7 +81,7 @@ public class DespesaService {
 		return despesaRepository.findByDataPagamentoBetween(dataInicio, dataFim);
 	}
 
-	public void editarDespesa(Long id, @Valid DespesaDTO despesaDTO) throws ApiException {
+	public void editarDespesa(Long id, @Valid EditarDespesaDTO despesaDTO) throws ApiException {
 			Despesa despesa = despesaRepository.findById(id).orElseThrow( () -> new DespesaNaoEncontradaException(id));
 			Conta conta = contaRepository.findById(despesa.getConta().getId()).orElseThrow( () -> new ContaNaoEncontradaException(id));
 			Despesa novaDespesa = modelMapper.map(despesaDTO, Despesa.class);

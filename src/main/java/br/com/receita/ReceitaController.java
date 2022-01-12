@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.exception.ApiException;
+import br.com.receita.dto.EditarReceitaDTO;
+import br.com.receita.dto.NovaReceitaDTO;
 import br.com.receita.enums.TipoReceita;
 import br.com.receita.exception.ReceitaNaoEncontradaException;
 
@@ -66,12 +68,12 @@ public class ReceitaController {
 	}
 
 	@PostMapping
-	public Receita cadastrarReceita(@RequestBody ReceitaDTO receitaDTO) throws ApiException {
+	public Receita cadastrarReceita(@RequestBody NovaReceitaDTO receitaDTO) throws ApiException {
 		return receitaService.cadastrarReceita(receitaDTO);
 	}
 
 	@PutMapping("{receitaId}")
-	public void editarReceita(@PathVariable Long receitaId, @RequestBody ReceitaDTO receitaDTO) throws ApiException {
+	public void editarReceita(@PathVariable Long receitaId, @RequestBody EditarReceitaDTO receitaDTO) throws ApiException {
 		receitaService.editarReceita(receitaId, receitaDTO);
 	}
 
