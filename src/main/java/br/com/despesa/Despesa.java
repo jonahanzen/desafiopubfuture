@@ -24,19 +24,16 @@ public class Despesa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Double valor;
-
-	private LocalDate dataPagamento;
-
-	private LocalDate dataPagamentoEsperado;
-
 	@Enumerated(EnumType.STRING)
 	private TipoDespesa tipoDespesa;
 
 	@ManyToOne
 	@JsonBackReference
 	private Conta conta;
-
+	
+	private Double valor;
+	private LocalDate dataPagamento;
+	private LocalDate dataPagamentoEsperado;
 	private String descricao;
 
 }

@@ -25,15 +25,6 @@ public class Receita {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@PositiveOrZero
-	private Double valor;
-
-	private LocalDate dataRecebimento;
-
-	private LocalDate dataRecebimentoEsperado;
-
-	private String descricao;
-
 	@Enumerated(EnumType.STRING)
 	private TipoReceita tipoReceita;
 
@@ -41,4 +32,8 @@ public class Receita {
 	@JsonBackReference
 	private Conta conta;
 
+	private Double valor;
+	private LocalDate dataRecebimento;
+	private LocalDate dataRecebimentoEsperado;
+	private String descricao;
 }

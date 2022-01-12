@@ -73,13 +73,12 @@ public class ReceitaService {
 	 * @throws ApiException caso a receita nao seja encontrada
 	 */
 	public void editarReceita(Long id, @Valid ReceitaDTO receitaDTO) throws ApiException {
-		if (receitaRepository.existsById(id)) {
-			Receita receita = modelMapper.map(receitaDTO, Receita.class);
-			receita.setId(id);
-			receitaRepository.save(receita);
-		} else {
-			throw new ContaNaoEncontradaException(id);
-		}
+		Receita receita = receitaRepository.findById(id).orElseThrow( () -> new ReceitaNaoEncontradaException(id)) ;
+		Conta conta = contaRepository.findById(receita.getConta().getId()).orElseThrow( () -> new ContaNaoEncontradaException(id) ) ;
+			Receita novaReceita = modelMapper.map(receitaDTO, Receita.class);
+			novaReceita.setId(id);
+			novaReceita.setConta(conta);
+			receitaRepository.save(novaReceita);
 	}
 	
 	/**

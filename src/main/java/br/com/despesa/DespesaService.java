@@ -80,13 +80,12 @@ public class DespesaService {
 	}
 
 	public void editarDespesa(Long id, @Valid DespesaDTO despesaDTO) throws ApiException {
-		if (despesaRepository.existsById(id)) {
-			Despesa despesa = modelMapper.map(despesaDTO, Despesa.class);
-			despesa.setId(id);
-			despesaRepository.save(despesa);
-		} else {
-			throw new DespesaNaoEncontradaException(id);
-		}
+			Despesa despesa = despesaRepository.findById(id).orElseThrow( () -> new DespesaNaoEncontradaException(id));
+			Conta conta = contaRepository.findById(despesa.getConta().getId()).orElseThrow( () -> new ContaNaoEncontradaException(id));
+			Despesa novaDespesa = modelMapper.map(despesaDTO, Despesa.class);
+			novaDespesa.setId(id);
+			novaDespesa.setConta(conta);
+			despesaRepository.save(novaDespesa);
 	}
 
 	/**

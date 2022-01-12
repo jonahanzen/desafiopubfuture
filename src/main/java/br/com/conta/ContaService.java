@@ -27,7 +27,7 @@ public class ContaService {
 	private ReceitaRepository receitaRepository;
 
 	@Autowired
-	ModelMapper mapper;
+	private ModelMapper mapper;
 
 	/**
 	 * Metodo responsavel por cadastrar uma conta no banco de dados
@@ -84,7 +84,7 @@ public class ContaService {
 	}
 
 	/**
-	 * Metodo responsavel por listar o saldo total pelo Id da Conta O metodo ira
+	 * Metodo responsavel por listar o saldo total pelo Id da Conta. O metodo ira
 	 * somar saldo e receita, subtraindo entao as despesas (saldo + receita) -
 	 * despesa
 	 * 
@@ -106,7 +106,7 @@ public class ContaService {
 	}
 
 	/**
-	 * Metodo responsavel por listar o saldo total de todas as contas O metodo ira
+	 * Metodo responsavel por listar o saldo total de todas as contas. O metodo ira
 	 * somar o saldo e a receita das contas, e entao subtrair as despesas (saldo +
 	 * receitas) - despesa
 	 * 
@@ -154,7 +154,7 @@ public class ContaService {
 	 * Metodo responsavel por depositar em uma conta
 	 * 
 	 * @param idConta para onde sera depositoado
-	 * @param saldo   a ser depositado
+	 * @param saldo a ser depositado
 	 * @return Double valor que foi depositado
 	 * @throws ApiException caso a conta nao seja encontrada
 	 */
@@ -169,7 +169,7 @@ public class ContaService {
 	 * Metodo responsavel por sacar de uma conta
 	 * 
 	 * @param idConta de onde sera sacado
-	 * @param saldo   a ser sacado
+	 * @param saldo a ser sacado
 	 * @return Double valor que foi sacado
 	 * @throws ApiException caso a conta nao seja encontrada
 	 */
