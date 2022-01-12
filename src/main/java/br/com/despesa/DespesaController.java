@@ -77,7 +77,7 @@ public class DespesaController {
 	}
 
 	@DeleteMapping("{despesaId}")
-	public void removerDespesa(@PathVariable Long despesaId) {
+	public void removerDespesa(@PathVariable Long despesaId) throws ApiException {
 		despesaService.removerDespesa(despesaId);
 	}
 

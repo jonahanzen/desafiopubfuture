@@ -56,21 +56,23 @@ public class DespesaService {
 	}
 
 	/**
-	 * Metodo responsavel por consultar dados de todas as despesas pelo tipo de despesa
+	 * Metodo responsavel por consultar dados de todas as despesas pelo tipo de
+	 * despesa
+	 * 
 	 * @see {@link TipoDespesa}
 	 * 
 	 * @param tipoDespesa a ser consultado
-	 * @return List de despesas 
+	 * @return List de despesas
 	 */
 	public List<Despesa> dadosDespesaPorTipoDespesa(TipoDespesa tipoDespesa) {
 		return despesaRepository.findByTipoDespesa(tipoDespesa);
 	}
-	
+
 	/**
 	 * Metodo responsavel por listar as despesas entre um periodo
 	 * 
 	 * @param dataInicio do periodo a ser consultado
-	 * @param dataFim do periodo a ser consultado
+	 * @param dataFim    do periodo a ser consultado
 	 * @return List de despesas do periodo
 	 */
 	public List<Despesa> listarDespesaPorPeriodo(LocalDate dataInicio, LocalDate dataFim) {
@@ -91,8 +93,12 @@ public class DespesaService {
 	 * Metodo responsavel por remover uma despesa
 	 * 
 	 * @param id da despesa a ser removida
+	 * @throws ApiException
 	 */
-	public void removerDespesa(Long id) {
+	public void removerDespesa(Long id) throws ApiException {
+		if (!despesaRepository.existsById(id)) {
+			throw new DespesaNaoEncontradaException(id);
+		}
 		despesaRepository.deleteById(id);
 	}
 
@@ -106,11 +112,12 @@ public class DespesaService {
 	}
 
 	/**
-	 * Metodo responsavel por consultar despesas entre um periodo e outro de uma conta
+	 * Metodo responsavel por consultar despesas entre um periodo e outro de uma
+	 * conta
 	 * 
-	 * @param contaId das despesas a serem consultadas
+	 * @param contaId    das despesas a serem consultadas
 	 * @param dataInicio da consulta das despesas
-	 * @param dataFim da consulta das despesas
+	 * @param dataFim    da consulta das despesas
 	 * @return List com as despesas do periodo
 	 */
 	public List<Despesa> listarDespesasContaPorPeriodo(Long contaId, LocalDate dataInicio, LocalDate dataFim) {

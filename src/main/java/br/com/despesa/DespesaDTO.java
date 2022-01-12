@@ -2,7 +2,7 @@ package br.com.despesa;
 
 import java.time.LocalDate;
 
-import br.com.receita.enums.TipoReceita;
+import br.com.despesa.enums.TipoDespesa;
 import lombok.Data;
 
 @Data
@@ -14,6 +14,6 @@ public class DespesaDTO {
 	private LocalDate dataPagamento;
 	private LocalDate dataPagamentoEsperado;
 	private String descricao;
-	private TipoReceita tipoReceita;
+	private TipoDespesa tipoDespesa;
 
 }

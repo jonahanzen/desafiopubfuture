@@ -1,14 +1,16 @@
 package br.com.conta;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,56 +19,81 @@ import br.com.conta.exception.ContaNaoEncontradaException;
 import br.com.exception.ApiException;
 
 @SpringBootTest
+@TestInstance(Lifecycle.PER_CLASS)
 class ContaServiceTest {
 
 	@Autowired
 	private ContaService contaService;
 
 	private static ContaDTO contaDTO;
-	@BeforeAll
-	public static void init() {
-		contaDTO = new ContaDTO();
-	}
 
-	@BeforeEach
-	public  void contas() {
+	@BeforeAll
+	public void contasSetup() throws ApiException {
+		contaDTO = new ContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
-		try {
-			contaService.cadastrarConta(contaDTO);
-		} catch (ApiException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	void deveCadastrarConta() throws ApiException {
-		assertNotNull(contaService.cadastrarConta(contaDTO));
+		contaDTO.setInstituicaoFinanceira("Picpay");
+		contaService.cadastrarConta(contaDTO);
+		contaDTO = new ContaDTO();
+		contaDTO.setSaldo(2000.00);
+		contaDTO.setTipoConta(TipoConta.CARTEIRA);
+		contaDTO.setInstituicaoFinanceira("Picpay");
+		contaService.cadastrarConta(contaDTO);
+		contaDTO = new ContaDTO();
+		contaDTO.setSaldo(2000.00);
+		contaDTO.setTipoConta(TipoConta.CARTEIRA);
+		contaDTO.setInstituicaoFinanceira("Picpay");
+		contaService.cadastrarConta(contaDTO);
+		contaDTO = new ContaDTO();
+		contaDTO.setSaldo(2000.00);
+		contaDTO.setTipoConta(TipoConta.CARTEIRA);
+		contaDTO.setInstituicaoFinanceira("Picpay");
+		contaService.cadastrarConta(contaDTO);
+		contaDTO = new ContaDTO();
+		contaDTO.setSaldo(2000.00);
+		contaDTO.setTipoConta(TipoConta.CARTEIRA);
+		contaDTO.setInstituicaoFinanceira("Picpay");
+		contaService.cadastrarConta(contaDTO);
+		Assumptions.assumeTrue(contaService.listarContas().size() > 0);
 	}
 
 	@Test
 	void deveEditarConta() throws ApiException {
-		contaDTO.setSaldo(1500.50);
-		contaDTO.setTipoConta(TipoConta.CARTEIRA);
-		contaService.editarConta(2L, contaDTO);
-		Conta conta = contaService.dadosConta(2L);
-		assertTrue(conta.getSaldo() == 1500 && conta.getTipoConta() == TipoConta.CARTEIRA);
+		ContaDTO conta = new ContaDTO();
+		conta.setId(2L);
+		conta.setInstituicaoFinanceira("BB");
+		conta.setSaldo(1500.50);
+		conta.setTipoConta(TipoConta.CARTEIRA);
+		contaService.editarConta(2L, conta);
+		Conta contaEdit = contaService.dadosConta(2L);
+		assertTrue(contaEdit.getSaldo() == 1500.50 && contaEdit.getTipoConta() == TipoConta.CARTEIRA);
 	}
 
 	@Test
-	void deveRemoverConta() throws ApiException {
-		contaService.removerConta(1L);
-		assertNull(contaService.dadosConta(1L));
+	void deveLancarExcecaoAoConsultarContaInexistente() throws ApiException {
+		contaService.removerConta(3L);
+		ContaNaoEncontradaException excecao = assertThrows(ContaNaoEncontradaException.class, () -> {
+			contaService.dadosConta(3L);
+		});
+
+		String mensagemEsperada = "A conta: " + "3" + " Nao foi encontrada.";
+		String mensagemRecebida = excecao.getMessage();
+
+		assertTrue(mensagemRecebida.contains(mensagemEsperada));
+
 	}
 
 	@Test
 	void deveLancarExcecaoAoRemoverContaInexistente() throws ApiException {
-		contaDTO.setId(250L);
-		contaService.cadastrarConta(contaDTO);
-		contaService.removerConta(250L);
-		assertThrows(ContaNaoEncontradaException.class, () -> {
-			contaService.dadosConta(250L);
+		ContaNaoEncontradaException excecao = assertThrows(ContaNaoEncontradaException.class, () -> {
+			contaService.removerConta(1500L);
 		});
+
+		String mensagemEsperada = "A conta: " + "1500" + " Nao foi encontrada.";
+		String mensagemRecebida = excecao.getMessage();
+
+		assertTrue(mensagemRecebida.contains(mensagemEsperada));
+
 	}
 
 	@Test
@@ -76,7 +103,9 @@ class ContaServiceTest {
 
 	@Test
 	void deveListarSaldoTotalPorId() throws ApiException {
-		assertTrue(contaService.listarSaldoTotalPorId(2L) > 0);
+		contaDTO.setId(10L);
+		contaService.cadastrarConta(contaDTO);
+		assertNotNull(contaService.listarSaldoTotalPorId(1L));
 	}
 
 	@Test
@@ -86,26 +115,28 @@ class ContaServiceTest {
 
 	@Test
 	void deveTrazerDadosConta() throws ApiException {
-		Conta conta = contaService.dadosConta(3L);
+		Conta conta = contaService.dadosConta(1L);
 		assertNotNull(conta);
 	}
 
 	@Test
 	void deveTransferirSaldoEntreContas() throws ApiException {
-		contaService.transferirSaldoEntreContas(3L, 4L, 2000.00);
-		assertEquals(4000.00, contaService.dadosConta(4L).getSaldo());
+		contaService.transferirSaldoEntreContas(4L, 5L, 2000.00);
+		assertEquals(4000.00, contaService.dadosConta(5L).getSaldo());
 	}
 
 	@Test
 	void deveDepositarSaldo() throws ApiException {
-		contaService.depositarSaldo(4L, 2000.00);
-		assertEquals(4000.00, contaService.dadosConta(4L).getSaldo());
+		Conta conta = contaService.dadosConta(4L);
+		Double deposito = contaService.depositarSaldo(4L, 2000.00);
+		assertFalse(conta.getSaldo() == deposito);
 	}
 
 	@Test
 	void deveSacarSaldo() throws ApiException {
-		contaService.sacarSaldo(3L, 2000.00);
-		assertEquals(0.0, contaService.dadosConta(3L).getSaldo());
+		Conta conta = contaService.dadosConta(5L);
+		contaService.sacarSaldo(5L, conta.getSaldo());
+		assertEquals(0.0, contaService.dadosConta(5L).getSaldo());
 	}
 
 }
