@@ -130,6 +130,7 @@ public class ContaService {
 
 	/**
 	 * Metodo responsavel por transferir saldo entre duas contas
+	 * Este metodo nao ira validar saldos negativos.
 	 * 
 	 * 
 	 * @param contaOrigemId      da conta que esta transferindo
