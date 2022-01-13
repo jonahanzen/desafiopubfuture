@@ -26,7 +26,7 @@
       </ul>
     </li>
     <li><a href="#uso">Uso</a></li>
-    <li><a href="#agradecimentos">Agradecimentos</li>
+	  <li><a href="#agradecimentos">Agradecimentos <a/></li>
   </ol>
 </details>
 
