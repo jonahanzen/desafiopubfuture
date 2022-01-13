@@ -84,7 +84,7 @@ public class ReceitaService {
 	}
 	
 	/**
-	 * Metodo responsavel por listar as receitas entre um periodo
+	 * Metodo responsavel por listar as receitas entre um periodo e outro
 	 * 
 	 * @param dataInicio do periodo a ser consultado 
 	 * @param dataFim do periodo a ser consultado
@@ -94,12 +94,11 @@ public class ReceitaService {
 		return receitaRepository.findByDataRecebimentoBetween(dataInicio, dataFim);
 	}
 	
-	
 	/**
 	 * Metodo responsavel por remover uma receita
 	 * 
 	 * @param id da receita a ser removida
-	 * @throws ReceitaNaoEncontradaException  caso a receita nao exista
+	 * @throws ReceitaNaoEncontradaException caso a receita nao exista
 	 */
 	public void removerReceita(Long id) throws ReceitaNaoEncontradaException {
 		if (!receitaRepository.existsById(id)) {
@@ -130,7 +129,7 @@ public class ReceitaService {
 	}
 	
 	/**
-	 * Metodo responsavel por consultar o valor total das receitas
+	 * Metodo responsavel por consultar o valor total de todas as receitas
 	 * 
 	 * @return null caso nao haja receitas; Double valor total das receitas
 	 */
@@ -147,5 +146,4 @@ public class ReceitaService {
 	public Optional<Double> valorTotalReceitaPorContaId(Long contaId) {
 		return receitaRepository.findValorTotalReceitasPorContaId(contaId);
 	}
-	
 }

@@ -30,6 +30,7 @@ public class ReceitaController {
 	private ReceitaService receitaService;
 
 	@GetMapping
+	@ApiOperation(value = "Listar todas as receitas")
 	public List<Receita> listarReceitas() {
 		return receitaService.listarReceitas();
 	}
@@ -91,5 +92,4 @@ public class ReceitaController {
 	public void removerReceita(@PathVariable Long receitaId) throws ReceitaNaoEncontradaException {
 		receitaService.removerReceita(receitaId);
 	}
-
 }

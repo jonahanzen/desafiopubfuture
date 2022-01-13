@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import br.com.exception.ApiException;
+
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
 public class ContaJaExisteException extends ApiException {
 

@@ -128,7 +128,7 @@ class DespesaServiceTest {
 
 	@Test
 	void deveListarReceitas() {
-		assertNotNull(despesaService.listarReceitas());
+		assertNotNull(despesaService.listarDespesas());
 	}
 
 	@Test

@@ -46,7 +46,7 @@ public class ContaService {
 	/**
 	 * Metodo responsavel por editar a conta
 	 * 
-	 * @param id       da conta a ser editada
+	 * @param id da conta a ser editada
 	 * @param contaDTO com os novos valores
 	 * @throws ContaNaoEncontradaException caso a conta com o id nao exista
 	 */
@@ -82,8 +82,8 @@ public class ContaService {
 
 	/**
 	 * Metodo responsavel por listar o saldo total pelo Id da Conta. O metodo ira
-	 * somar saldo e receita, subtraindo entao as despesas (saldo + receita) -
-	 * despesa
+	 * somar saldo e receita, subtraindo entao as despesas
+	 *  (saldo + receita) - despesa
 	 * 
 	 * @param idConta a ser efetuado calculo do saldo total
 	 * @return Double saldo total da conta
@@ -104,8 +104,8 @@ public class ContaService {
 
 	/**
 	 * Metodo responsavel por listar o saldo total de todas as contas. O metodo ira
-	 * somar o saldo e a receita das contas, e entao subtrair as despesas (saldo +
-	 * receitas) - despesa
+	 * somar o saldo e a receita das contas, e entao subtrair as despesas
+	 *  (saldo + receitas) - despesa
 	 * 
 	 * @return Double saldo total de todas as contas
 	 */
@@ -133,8 +133,8 @@ public class ContaService {
 	 * Este metodo nao ira validar saldos negativos.
 	 * 
 	 * 
-	 * @param contaOrigemId      da conta que esta transferindo
-	 * @param contaDestinoId     da conta que recebe a transferencia
+	 * @param contaOrigemId da conta que esta transferindo
+	 * @param contaDestinoId da conta que recebe a transferencia
 	 * @param valorTransferencia do valor a ser transferido
 	 * @throws ApiException caso alguma das contas nao seja encontrada
 	 */

@@ -28,11 +28,10 @@ public class DespesaController {
 	@Autowired
 	private DespesaService despesaService;
 	
-
 	@GetMapping
 	@ApiOperation(value = "Listar todas as despesas")
 	public List<Despesa> listarDespesas() {
-		return despesaService.listarReceitas();
+		return despesaService.listarDespesas();
 	}
 
 	@GetMapping("{despesaId}")
@@ -57,7 +56,6 @@ public class DespesaController {
 		return despesaService.listarDespesaPorPeriodo(dataInicio, dataFim);
 	}
 	
-
 	@GetMapping("total")
 	@ApiOperation(value = "Listar valor total de todas as despesas")
 	public Optional<Double> valorTotalDespesas() {

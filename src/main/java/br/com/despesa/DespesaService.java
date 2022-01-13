@@ -71,7 +71,7 @@ public class DespesaService {
 	}
 
 	/**
-	 * Metodo responsavel por listar as despesas entre um periodo
+	 * Metodo responsavel por listar as despesas entre um periodo e outro
 	 * 
 	 * @param dataInicio do periodo a ser consultado
 	 * @param dataFim    do periodo a ser consultado
@@ -81,6 +81,13 @@ public class DespesaService {
 		return despesaRepository.findByDataPagamentoBetween(dataInicio, dataFim);
 	}
 
+	/**
+	 * Metodo responsavel por editar uma despesa ja existente
+	 * 
+	 * @param id da despesa a ser editada
+	 * @param despesaDTO nova despesa
+	 * @throws ApiException caso nao encontre a despesa ou a conta da despesa
+	 */
 	public void editarDespesa(Long id, @Valid EditarDespesaDTO despesaDTO) throws ApiException {
 			Despesa despesa = despesaRepository.findById(id).orElseThrow( () -> new DespesaNaoEncontradaException(id));
 			Conta conta = contaRepository.findById(despesa.getConta().getId()).orElseThrow( () -> new ContaNaoEncontradaException(id));
@@ -108,7 +115,7 @@ public class DespesaService {
 	 * 
 	 * @return List de despesas
 	 */
-	public List<Despesa> listarReceitas() {
+	public List<Despesa> listarDespesas() {
 		return despesaRepository.findAll();
 	}
 

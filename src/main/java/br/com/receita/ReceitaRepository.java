@@ -21,7 +21,6 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 	@Query("SELECT SUM(r.valor) FROM Receita r WHERE Conta_id = ?1")
 	Optional<Double> findValorTotalReceitasPorContaId(Long contaId);
 	
-	
 	List<Receita> findByDataRecebimentoBetween(LocalDate dataInicio, LocalDate dataFim);
 
 }
