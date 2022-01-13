@@ -142,6 +142,39 @@ Endpoints Receita
 ![Endpoints-Receita][imagem-receita-controller]
 
 <br/>
+	
+### Agradecimentos
+
+Agradeço pela oportunidade do desafio e também agradeço a existência do Spring Boot.  :grin: 
+
+Links e sites gerais que foram utilizados para consulta de documentação e/ou dúvidas e/ou que sirvam de alguma ajuda.
+
+**Consulta de documentação**
+	
+https://www.baeldung.com/maven-wrapper
+	
+https://mkyong.com/maven/how-to-run-unit-test-with-maven/
+	
+https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.structuring-your-code
+	
+https://www.baeldung.com/junit-5
+	
+https://www.baeldung.com/java-modelmapper
+	
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
+
+https://stackoverflow.com/questions/51637103/how-do-i-return-sum-from-jpa-query-using-hibernate-and-spring-boot
+	
+https://qastack.com.br/programming/12505141/only-using-jsonignore-during-serialization-but-not-deserialization
+
+**Gerais**
+	
+https://stackedit.io/
+	
+https://github.com/othneildrew/Best-README-Template/blob/master/README.md
+
+	
+	
 
 
 
