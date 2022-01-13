@@ -46,12 +46,12 @@ class ReceitaServiceTest {
 		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
-		contaDTO.setInstituicaoFinanceira("Picpay");
+		contaDTO.setInstituicaoFinanceira("banco A");
 		contaService.cadastrarConta(contaDTO);
 		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
-		contaDTO.setInstituicaoFinanceira("Picpay");
+		contaDTO.setInstituicaoFinanceira("banco A");
 		contaService.cadastrarConta(contaDTO);
 		receitaDTO = new NovaReceitaDTO();
 		receitaDTO.setContaId(1L);
