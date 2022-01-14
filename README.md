@@ -51,7 +51,7 @@ Eu optei por utilizar uma arquitetura de **microsserviços** devido a pontualida
 * Swagger / Swagger UI 2.9.2 ( Documentação API / Endpoints )
 * ModelMapper 2.4.4 ( Mapeamento DTO's  / Modelos)
 * JPA / Hibernate ( Mapeamento Objeto-Relacional )
-* JUnit 5 ( Testes Unitários )
+* JUnit 5 ( Testes Unitários ) / MockMvc ( Testes Integração )
 
 
 
@@ -149,29 +149,31 @@ Agradeço pela oportunidade do desafio e também agradeço a existência do Spri
 
 Links e sites gerais que foram utilizados para consulta de documentação e/ou dúvidas e/ou que sirvam de alguma ajuda.
 
-**Consulta de documentação**
-	
-https://www.baeldung.com/maven-wrapper
-	
-https://mkyong.com/maven/how-to-run-unit-test-with-maven/
-	
-https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.structuring-your-code
-	
-https://www.baeldung.com/junit-5
-	
-https://www.baeldung.com/java-modelmapper
-	
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 
-https://stackoverflow.com/questions/51637103/how-do-i-return-sum-from-jpa-query-using-hibernate-and-spring-boot
-	
-https://qastack.com.br/programming/12505141/only-using-jsonignore-during-serialization-but-not-deserialization
+<details>
+  <summary>Consulta de documentação</summary>
+  <ul>
+    <li> https://www.baeldung.com/integration-testing-in-spring </li>
+	<li> https://github.com/json-path/JsonPath </li>
+	<li> https://www.baeldung.com/jackson-object-mapper-tutorial </li>
+	<li> https://www.baeldung.com/maven-wrapper </li>
+	<li> https://mkyong.com/maven/how-to-run-unit-test-with-maven/ </li>
+	<li> https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.structuring-your-code </li>
+	<li> https://www.baeldung.com/junit-5 </li>
+	<li> https://www.baeldung.com/java-modelmapper </li>
+	<li> https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation </li>
+	<li> https://stackoverflow.com/questions/51637103/how-do-i-return-sum-from-jpa-query-using-hibernate-and-spring-boot </li>
+	<li> https://qastack.com.br/programming/12505141/only-using-jsonignore-during-serialization-but-not-deserialization </li>
+	<li> https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/result/MockMvcResultMatchers.html </li>
+	</ul>
+</details>
 
-**Gerais**
-	
-https://stackedit.io/
-	
-https://github.com/othneildrew/Best-README-Template/blob/master/README.md
+<details>
+<summary> Gerais </summary>
+<ul>
+<li> https://stackedit.io/ </li>
+<li> https://github.com/othneildrew/Best-README-Template/blob/master/README.md </li>
+</ul>
 
 	
 	
@@ -189,7 +191,7 @@ https://github.com/othneildrew/Best-README-Template/blob/master/README.md
 
 
 
-<!-- links -->
+<!-- Links -->
 [test]: src/test/java/br/com
 [lombok]: https://projectlombok.org
 [pom]: pom.xml
