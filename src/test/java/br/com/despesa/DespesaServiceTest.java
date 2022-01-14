@@ -100,7 +100,7 @@ class DespesaServiceTest {
 	@Test
 	void naoDeveTrazerListaDespesaPorPeriodoSemDespesas() {
 		assertEquals(0,
-				despesaService.listarDespesaPorPeriodo(LocalDate.of(2019, 5, 15), LocalDate.of(2020, 10, 19)).size());
+				despesaService.listarDespesaPorPeriodo(LocalDate.of(2050, 5, 15), LocalDate.of(2065, 10, 19)).size());
 	}
 
 	@Test
