@@ -63,7 +63,7 @@ public class DespesaController {
 	}
 
 	@GetMapping("{contaId}/total")
-	@ApiOperation(value = "Listar todas as despesas de uma conta")
+	@ApiOperation(value = "Listar valor total de todas as despesas de uma conta")
 	public Optional<Double> valorTotalDespesasPorContaId(@PathVariable Long contaId) {
 		return despesaService.valorTotalDespesaPorContaId(contaId);
 	}
