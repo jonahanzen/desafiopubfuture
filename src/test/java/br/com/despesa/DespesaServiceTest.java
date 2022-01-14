@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.conta.ContaService;
-import br.com.conta.dto.EditarContaDTO;
 import br.com.conta.dto.NovaContaDTO;
 import br.com.conta.enums.TipoConta;
 import br.com.despesa.dto.EditarDespesaDTO;

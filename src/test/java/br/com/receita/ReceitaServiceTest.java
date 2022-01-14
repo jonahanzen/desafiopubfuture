@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.conta.ContaService;
-import br.com.conta.dto.EditarContaDTO;
 import br.com.conta.dto.NovaContaDTO;
 import br.com.conta.enums.TipoConta;
 import br.com.exception.ApiException;
@@ -28,21 +27,21 @@ import br.com.receita.exception.ReceitaNaoEncontradaException;
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 class ReceitaServiceTest {
-	
+
 	@Autowired
 	private ReceitaService receitaService;
-	
+
 	@Autowired
 	private ContaService contaService;
-	
+
 	private static NovaContaDTO contaDTO;
 	private static NovaReceitaDTO receitaDTO;
 	private static EditarReceitaDTO editarReceitaDTO;
-	
+
 	@BeforeAll
-	//Cadastra 2 contas e 3 receitas
+	// Cadastra 2 contas e 3 receitas
 	public void receitaSetup() throws ApiException {
-		
+
 		contaDTO = new NovaContaDTO();
 		contaDTO.setSaldo(2000.00);
 		contaDTO.setTipoConta(TipoConta.CARTEIRA);
@@ -91,11 +90,9 @@ class ReceitaServiceTest {
 		editarReceitaDTO.setValor(1800.75);
 		receitaService.editarReceita(2L, editarReceitaDTO);
 		Receita receita = receitaService.dadosReceita(2L);
-		assertAll(
-				() -> assertEquals( "Receita Edit" , receita.getDescricao()),
-				() -> assertEquals( 1800.75, receita.getValor())
-				);
-		
+		assertAll(() -> assertEquals("Receita Edit", receita.getDescricao()),
+				() -> assertEquals(1800.75, receita.getValor()));
+
 	}
 
 	@Test
@@ -105,9 +102,9 @@ class ReceitaServiceTest {
 
 	@Test
 	void deveLancarExcecaoaoRemoverReceitaInexistente() {
-		ReceitaNaoEncontradaException excecao = assertThrows(ReceitaNaoEncontradaException.class, 
-				() -> receitaService.removerReceita(700L) );
-		
+		ReceitaNaoEncontradaException excecao = assertThrows(ReceitaNaoEncontradaException.class,
+				() -> receitaService.removerReceita(700L));
+
 		String mensagemEsperada = "A receita: " + "700" + " Nao foi encontrada";
 		String mensagemRecebida = excecao.getMessage();
 		assertTrue(mensagemRecebida.contains(mensagemEsperada));
@@ -120,7 +117,8 @@ class ReceitaServiceTest {
 
 	@Test
 	void deveListarReceitasContaPorPeriodo() {
-	assertNotNull(receitaService.listarReceitasContaPorPeriodo(1L, LocalDate.of(2022, 01, 15), LocalDate.of(2022, 01, 17)));
+		assertNotNull(receitaService.listarReceitasContaPorPeriodo(1L, LocalDate.of(2022, 01, 15),
+				LocalDate.of(2022, 01, 17)));
 	}
 
 	@Test

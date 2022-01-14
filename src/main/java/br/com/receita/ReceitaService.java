@@ -24,13 +24,13 @@ public class ReceitaService {
 
 	@Autowired
 	private ReceitaRepository receitaRepository;
-	
+
 	@Autowired
 	private ContaRepository contaRepository;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	/**
 	 * Metodo responsavel por cadastrar uma receita
 	 * 
@@ -39,12 +39,13 @@ public class ReceitaService {
 	 * @throws ApiException caso o Id da conta da receita nao seja encontrado
 	 */
 	public Receita cadastrarReceita(@Valid NovaReceitaDTO receitaDTO) throws ApiException {
-	Receita receita = modelMapper.map(receitaDTO, Receita.class);
-	Conta conta = contaRepository.findById(receitaDTO.getContaId()).orElseThrow( () -> new ContaNaoEncontradaException(receitaDTO.getId()));
-	receita.setConta(conta);
+		Receita receita = modelMapper.map(receitaDTO, Receita.class);
+		Conta conta = contaRepository.findById(receitaDTO.getContaId())
+				.orElseThrow(() -> new ContaNaoEncontradaException(receitaDTO.getId()));
+		receita.setConta(conta);
 		return receitaRepository.save(receita);
 	}
-	
+
 	/**
 	 * Metodo responsavel por consultar os dados de uma receita
 	 * 
@@ -53,11 +54,12 @@ public class ReceitaService {
 	 * @throws ApiException caso a receita nao exista
 	 */
 	public Receita dadosReceita(Long id) throws ApiException {
-		return receitaRepository.findById(id).orElseThrow( () -> new ContaNaoEncontradaException(id));
+		return receitaRepository.findById(id).orElseThrow(() -> new ContaNaoEncontradaException(id));
 	}
-	
+
 	/**
 	 * Metodo responsavel por consultar as receitas por tipo de receita
+	 * 
 	 * @see {@link TipoReceita}
 	 * 
 	 * @param tipoReceita a ser consultado
@@ -66,34 +68,35 @@ public class ReceitaService {
 	public List<Receita> dadosReceitaPorTipoReceita(TipoReceita tipoReceita) {
 		return receitaRepository.findByTipoReceita(tipoReceita);
 	}
-	
+
 	/**
 	 * Metodo responsavel por editar uma receita
 	 * 
-	 * @param id da receita a ser editada
+	 * @param id      da receita a ser editada
 	 * @param receita com os novos valores
 	 * @throws ApiException caso a receita nao seja encontrada
 	 */
 	public void editarReceita(Long id, @Valid EditarReceitaDTO receitaDTO) throws ApiException {
-		Receita receita = receitaRepository.findById(id).orElseThrow( () -> new ReceitaNaoEncontradaException(id)) ;
-		Conta conta = contaRepository.findById(receita.getConta().getId()).orElseThrow( () -> new ContaNaoEncontradaException(id) ) ;
-			Receita novaReceita = modelMapper.map(receitaDTO, Receita.class);
-			novaReceita.setId(id);
-			novaReceita.setConta(conta);
-			receitaRepository.save(novaReceita);
+		Receita receita = receitaRepository.findById(id).orElseThrow(() -> new ReceitaNaoEncontradaException(id));
+		Conta conta = contaRepository.findById(receita.getConta().getId())
+				.orElseThrow(() -> new ContaNaoEncontradaException(id));
+		Receita novaReceita = modelMapper.map(receitaDTO, Receita.class);
+		novaReceita.setId(id);
+		novaReceita.setConta(conta);
+		receitaRepository.save(novaReceita);
 	}
-	
+
 	/**
 	 * Metodo responsavel por listar as receitas entre um periodo e outro
 	 * 
-	 * @param dataInicio do periodo a ser consultado 
-	 * @param dataFim do periodo a ser consultado
+	 * @param dataInicio do periodo a ser consultado
+	 * @param dataFim    do periodo a ser consultado
 	 * @return List de receitas do periodo
 	 */
 	public List<Receita> listarReceitasPorPeriodo(LocalDate dataInicio, LocalDate dataFim) {
 		return receitaRepository.findByDataRecebimentoBetween(dataInicio, dataFim);
 	}
-	
+
 	/**
 	 * Metodo responsavel por remover uma receita
 	 * 
@@ -106,7 +109,7 @@ public class ReceitaService {
 		}
 		receitaRepository.deleteById(id);
 	}
-	
+
 	/**
 	 * Metodo responsavel por listar todas as receitas
 	 * 
@@ -115,19 +118,20 @@ public class ReceitaService {
 	public List<Receita> listarReceitas() {
 		return receitaRepository.findAll();
 	}
-	
+
 	/**
-	 * Metodo responsavel por consultar receitas entre um periodo e outro de uma conta
+	 * Metodo responsavel por consultar receitas entre um periodo e outro de uma
+	 * conta
 	 * 
-	 * @param contaId das receitas a serem consultadas
+	 * @param contaId    das receitas a serem consultadas
 	 * @param dataInicio do periodo a ser consultado
-	 * @param dataFim do periodo a ser consultado
+	 * @param dataFim    do periodo a ser consultado
 	 * @return List de receitas do periodo
 	 */
 	public List<Receita> listarReceitasContaPorPeriodo(Long contaId, LocalDate dataInicio, LocalDate dataFim) {
 		return receitaRepository.findByContaIdAndDataRecebimentoBetween(contaId, dataInicio, dataFim);
 	}
-	
+
 	/**
 	 * Metodo responsavel por consultar o valor total de todas as receitas
 	 * 
@@ -136,7 +140,7 @@ public class ReceitaService {
 	public Optional<Double> valorTotalReceitas() {
 		return receitaRepository.findValorTotalReceitas();
 	}
-	
+
 	/**
 	 * Metodo responsavel por consultar o valor total das receitas de uma conta
 	 * 

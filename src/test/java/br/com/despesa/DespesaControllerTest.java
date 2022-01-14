@@ -39,7 +39,6 @@ import br.com.despesa.dto.EditarDespesaDTO;
 import br.com.despesa.dto.NovaDespesaDTO;
 import br.com.despesa.enums.TipoDespesa;
 
-//TODO implementar todos os testes
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -70,6 +69,7 @@ class DespesaControllerTest {
 		novaContaDTO.setTipoConta(TipoConta.CARTEIRA);
 		novaContaDTO.setInstituicaoFinanceira("banco A");
 		conta = contaService.cadastrarConta(novaContaDTO);
+		assumeThat(conta != null);
 	}
 
 	private Long novaDespesa() throws Exception {
@@ -80,6 +80,7 @@ class DespesaControllerTest {
 		novaDespesa.setDescricao("pizza");
 		novaDespesa.setTipoDespesa(TipoDespesa.ALIMENTACAO);
 		novaDespesa.setValor(60.74);
+		assumeThat(novaDespesa != null);
 		return despesaService.cadastrarDespesa(novaDespesa).getId();
 	}
 
@@ -87,6 +88,7 @@ class DespesaControllerTest {
 	void deveListarDespesas() throws Exception {
 		novaDespesa();
 		novaDespesa();
+
 		mockMvc.perform(get("/despesa")).andExpect(status().isOk()).andExpect(content().string(containsString("id")))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.length()", is(equalTo(despesaService.listarDespesas().size()))));
@@ -96,6 +98,7 @@ class DespesaControllerTest {
 	@Test
 	void deveListarDadosDespesaPorId() throws Exception {
 		Long id = novaDespesa();
+
 		mockMvc.perform(get("/despesa/{id}", id)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.id", is(id.intValue())))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -105,8 +108,8 @@ class DespesaControllerTest {
 	void deveListarDespesasContaPorPeriodo() throws Exception {
 		Long despesaId = novaDespesa();
 		Long contaId = despesaService.dadosDespesa(despesaId).getConta().getId();
-		assumeThat(despesaId != null && contaId != null);
 		Despesa despesa = despesaService.dadosDespesa(despesaId);
+
 		mockMvc.perform(get("/despesa/{id}/{dataInicio}/{dataFim}", contaId, despesa.getDataPagamento().minusDays(1L),
 				despesa.getDataPagamento().plusDays(1L))).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -119,8 +122,8 @@ class DespesaControllerTest {
 	@Test
 	void deveListarDespesasPorPeriodo() throws Exception {
 		Long despesaId = novaDespesa();
-		assumeThat(despesaId != null);
 		Despesa despesa = despesaService.dadosDespesa(despesaId);
+
 		mockMvc.perform(get("/despesa/{dataInicio}/{dataFim}", despesa.getDataPagamento().minusDays(1L),
 				despesa.getDataPagamento().plusDays(1L))).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -158,6 +161,7 @@ class DespesaControllerTest {
 	@Transactional
 	void deveListarDespesaPorTipoDespesa() throws Exception {
 		novaDespesa();
+
 		mockMvc.perform(get("/despesa/tipo/{tipoDespesa}", novaDespesa.getTipoDespesa())).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[0].tipoDespesa", is("ALIMENTACAO")));
@@ -174,10 +178,9 @@ class DespesaControllerTest {
 		novaDespesa.setTipoDespesa(TipoDespesa.ALIMENTACAO);
 		novaDespesa.setValor(60.74);
 
-		String despesaJson = objectMapper.writeValueAsString(novaDespesa);
-
-		mockMvc.perform(post("/despesa").contentType(MediaType.APPLICATION_JSON).content(despesaJson))
-				.andExpect(status().isOk()).andExpect(jsonPath("$.valor", is(60.74)));
+		mockMvc.perform(post("/despesa").contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(novaDespesa))).andExpect(status().isOk())
+				.andExpect(jsonPath("$.valor", is(60.74)));
 	}
 
 	@Test

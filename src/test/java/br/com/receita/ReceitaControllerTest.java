@@ -92,6 +92,7 @@ class ReceitaControllerTest {
 	@Test
 	void deveListarDadosReceitaPorId() throws Exception {
 		Long id = novaReceita();
+
 		mockMvc.perform(get("/receita/{id}", id)).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.id", is(id.intValue())));
@@ -158,6 +159,7 @@ class ReceitaControllerTest {
 	@Test
 	void deveListarReceitasPorTipoReceita() throws Exception {
 		novaReceita();
+
 		mockMvc.perform(get("/receita/tipo/{tipoReceita}", novaReceitaDTO.getTipoReceita())).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[0].tipoReceita", is("SALARIO")));
