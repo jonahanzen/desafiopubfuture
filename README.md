@@ -1,6 +1,12 @@
 <div id="top"></div>
 
+
 [![LinkedIn][linkedin-shield]][linkedin-url]
+
+
+# Finance App
+#### Video Demo:  https://www.youtube.com/shorts/cgAGKKnWn0s
+#### Description:
 
   <h2 align="center">Desafio Pub Future </h2>
   <p align="center"> Projeto criado para o desafio Pub Future de finanças pessoais </p
